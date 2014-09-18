@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
@@ -57,12 +58,12 @@ function nv_theme_congvan_main ( $error, $array, $page_title, $base_url, $all_pa
         if ( $type != 0 )
         {
         	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_name . "_type` WHERE `parentid`=" . $type;
-        	$result = $db->sql_query( $sql );
-        	if ( $db->sql_numrows( $result ) > 0 )
+        	$result = $db->query( $sql );
+        	if ( $result->rowCount() > 0 )
         	{
         		$xtpl->assign( 'type_type', sprintf( $lang_module['type_type'], $listtypes[$type]['title'] ) );
 
-        		while ( $ro = $db->sql_fetchrow( $result ) )
+        		while ( $ro = $result->fetch() )
         		{
         			$pa = $ro['parentid'];
         			$xtpl->assign( 'LINK', NV_BASE_SITEURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;type=" . $ro['id'] );

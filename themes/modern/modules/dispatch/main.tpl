@@ -28,18 +28,18 @@ table.tab1 tbody.r3{
 	var pro_del_cofirm = "{LANG.product_del_cofirm}";
 </script>
 
-<form action="{FORM_ACTION}" method="get">
+<form class="form-inline" action="{FORM_ACTION}" method="get">
 
 <!-- BEGIN: timkiem -->
 <div style= "margin-bottom: 10px; margin-top: 10px;">
 <input type="hidden" name ='nv' value="{MODULE_NAME}">
 <input type="hidden" name ='op' value="{OP}">
 <input type="hidden" name ='se' value="1">
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	 <tr>
          <td> {LANG.type} </td>
           <td>
-            <select name="type">
+            <select class="form-control" name="type">
               <!-- BEGIN: typeid -->
                <option value="{LISTTYPES.id}"{LISTTYPES.selected}>{LISTTYPES.name}</option>
             <!-- END: typeid -->
@@ -50,13 +50,12 @@ table.tab1 tbody.r3{
 		<td> {LANG.dis_code} </td> <td><input name="code" size="15" value="{code}"> </td>
 	</tr>
 	<tr>
-		<td> {LANG.dis_content} </td> <td>
-			<textarea rows="2" cols="40" name="content">{content}</textarea>
+		<td> {LANG.dis_content} </td> <td><textarea rows="2" cols="40" name="content">{content}</textarea>
 		</td>
 	</tr>
 	<tr>
 		<td> {LANG.dis_person} </td> 
-		<td><select name="from_signer" id="from_signer_{LISSIS.id}" onchange="nv_link('{LISSIS.id}');" >
+		<td><select class="form-control" name="from_signer" id="from_signer_{LISSIS.id}" onchange="nv_link('{LISSIS.id}');" >
 			<!-- BEGIN: from_signer -->
 			      <option value="{LISSIS.id}"{LISSIS.selected}>{LISSIS.name}</option>
 			<!-- END: from_signer -->
@@ -69,17 +68,17 @@ table.tab1 tbody.r3{
 		<td>{LANG.chos_dis} </td>
 		<td>
 			{LANG.from}
-			<input value="{FROM}" type="text" id="from" name="from" readonly="readonly" style="width:100px" />
+			<input class="form-control" value="{FROM}" type="text" id="from" name="from" readonly="readonly" style="width:100px" />
 			<img src="{NV_BASE_SITEURL}images/calendar.jpg" style="cursor: pointer; vertical-align: middle;" onclick="popCalendar.show(this, 'from', 'dd.mm.yyyy', true);" alt="" height="17" />
 			{LANG.to}
-			<input value="{TO}" type="text" id="to" name="to" readonly="readonly" style="width:100px" />
+			<input class="form-control" value="{TO}" type="text" id="to" name="to" readonly="readonly" style="width:100px" />
 			<img src="{NV_BASE_SITEURL}images/calendar.jpg" style="cursor: pointer; vertical-align: middle;" onclick="popCalendar.show(this, 'to', 'dd.mm.yyyy', true);" alt="" height="17" />
 			<img alt="" src="{NV_BASE_SITEURL}images/refresh.png" style="cursor: pointer; vertical-align: middle;" onclick="nv_clear_text();" />
 		
 		</td>
 	</tr>
 	<tr>
-	<td colspan="2"><input type="submit" value="Search" name="timkiem"></td>
+	<td colspan="2"><input class="btn btn-primary" type="submit" value="Search" name="timkiem"></td>
 	</tr>
 
 </table>
@@ -95,7 +94,7 @@ table.tab1 tbody.r3{
 <div class="clear"></div>
 <!-- END: error -->
 <!-- BEGIN: data -->
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
     <caption>{TABLE_CAPTION}</caption>
     <thead class= "thead">
         <tr>
@@ -119,8 +118,8 @@ table.tab1 tbody.r3{
             </td>  
         </tr>
     </thead>
+    <tbody>
     <!-- BEGIN: row -->
-    <tbody{CLASS}>
         <tr>
         	 <td>
                 {ROW.from_time}
@@ -144,8 +143,8 @@ table.tab1 tbody.r3{
 		      <!-- END: loop1 -->
             </td> 
        </tr>     
-    </tbody>
     <!-- END: row -->
+    <tbody>
     <!-- BEGIN: generate_page -->
     <tr class="footer">
         <td colspan="8">
@@ -157,4 +156,3 @@ table.tab1 tbody.r3{
 <!-- END: data -->
 </form>
 <!-- END: main -->
-

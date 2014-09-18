@@ -1,78 +1,57 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
 if ( ! defined( 'NV_IS_FILE_ADMIN' ) ) die( 'Stop!!!' );
 
-//tao du lieu cho lich su giao dich
-$my_head = "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/popcalendar/popcalendar.js\"></script>\n";
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.js\"></script>\n";
-$my_head .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.css\" />\n";
-$my_head .= "<script type=\"text/javascript\">\n";
-$my_head .= "Shadowbox.init({\n";
-$my_head .= "});\n";
-$my_head .= "</script>\n";
-
 $array['parentid'] = $catid = $array['type'] = $array['from_signer'] = $array['from_depid'] = 0;
 $arr_de['parentid'] = $array['statusid'] = $deid = $id = 0;
 $arr_imgs = $arr_img = $list_de = $lis = $listde = array();
-$array['from_time'] = $array['date_iss'] = $array['date_first'] = $array['date_die'] = $array['who_view'] = $check = $to_person = $to_recipient = $error = '';
-$array['groups_view'] = array();
+$array['from_time'] = $array['date_iss'] = $array['date_first'] = $array['date_die'] = $check = $to_person = $to_recipient = $error = '';
+$array['groups_view'] = 6;
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 
 // System groups user
 $groups_list = nv_groups_list();
 
-$array_who = array( 
-    $lang_global['who_view0'], $lang_global['who_view1'], $lang_global['who_view2'] 
-);
-
-if ( ! empty( $groups_list ) )
-{
-    $array_who[] = $lang_global['who_view3'];
-}
-
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_document` WHERE `id`=" . $id;
-$result = $db->sql_query( $sql );
-$num = $db->sql_numrows( $result );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id;
+$result = $db->query( $sql );
+$num = $result->rowCount();
 if ( $num > 0 )
 {
-    $array = $db->sql_fetchrow( $result );
+    $array = $result->fetch();
     $array['parentid'] = $array['catid'];
     $array['statusid'] = $array['status'];
-    $array['groups_view'] = explode(",", $array['groups_view'] );
     $arr_imgs = explode( ',', $array['file'] );
     
-    $sql1 = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_de_do` WHERE `doid`=" . $id;
+    $sql1 = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_de_do WHERE doid=" . $id;
     
-    $result1 = $db->sql_query( $sql1 );
-    $nu = $db->sql_numrows( $result1 );
+    $result1 = $db->query( $sql1 );
+    $nu = $result1->rowCount();
     if ( $nu > 0 )
     {
-        while ( $r = $db->sql_fetchrow( $result1 ) )
+        while ( $r = $result1->fetch() )
         {
-            $listde[] = $r['deid'];            
+            $listde[$r['deid']] = $r['deid'];
         }
-    
     }
-
 }
 
 if ( $nv_Request->isset_request( 'submit', 'post' ) )
 {
-    
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     
     $gr = array();
     
-    $gr = $nv_Request->get_typed_array( 'groups_view', 'post', '' );
-    $array['groups_view'] = implode( ",", $gr );
-    $array['who_view'] = $nv_Request->get_int( 'who_view', 'post', 0 );
+	$_groups_view = $nv_Request->get_array( 'groups_view', 'post', array() );
+	$array['groups_view'] = ! empty( $_groups_view ) ? implode( ',', nv_groups_post( array_intersect( $_groups_view, array_keys( $groups_list ) ) ) ) : '';
+	
     $array['parentid'] = $nv_Request->get_int( 'parentid', 'post', 0 );
     $array['type'] = $nv_Request->get_int( 'typeid', 'post', 0 );
     $array['from_depid'] = $nv_Request->get_int( 'from_depid', 'post', 0 );
@@ -85,8 +64,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
     $array['content'] = $nv_Request->get_string( 'content', 'post', '' );
     $array['statusid'] = $nv_Request->get_int( 'statusid', 'post', 0 );
     $arr_img = $nv_Request->get_typed_array( 'fileupload', 'post', 'string' );
-    $array['from_time'] = filter_text_input( 'from_time', 'post', '', '' );
-    
+    $array['from_time'] = $nv_Request->get_title( 'from_time', 'post', '', '' );
     
     if ( ! empty( $array['from_time'] ) )
     {
@@ -105,7 +83,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
         $array['from_time'] = '';
     }
     
-    $array['date_iss'] = filter_text_input( 'date_iss', 'post', '', 1 );
+    $array['date_iss'] = $nv_Request->get_title( 'date_iss', 'post', '', 1 );
     
     if ( ! empty( $array['date_iss'] ) )
     {
@@ -124,7 +102,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
         $array['date_iss'] = '';
     }
     
-    $array['date_first'] = filter_text_input( 'date_first', 'post', '', 1 );
+    $array['date_first'] = $nv_Request->get_title( 'date_first', 'post', '', 1 );
     
     if ( ! empty( $array['date_first'] ) )
     {
@@ -143,7 +121,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
         $array['date_first'] = '';
     }
     
-    $array['date_die'] = filter_text_input( 'date_die', 'post', '', 1 );
+    $array['date_die'] = $nv_Request->get_title( 'date_die', 'post', '', 1 );
     
     if ( ! empty( $array['date_die'] ) )
     {
@@ -220,49 +198,48 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
         { 
             if ( $id != 0 )
             {
-                $sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_document` SET 
-                    `catid` = " . $array['parentid'] . ",
-                    `type` = " . $array['type'] . ",                    
-                    `title` = " . $db->dbescape( $array['title'] ) . ",
-                    `alias` = '',
-					`code` = '" . $array['code'] . "',
-					`content`= " . $db->dbescape( $array['content'] ) . ",
-					`file` = " . $db->dbescape( $array['file'] ) . ",
-					`from_org` = " . $db->dbescape( $array['from_org'] ) . ",
-					`to_org` = " . $db->dbescape( $array['to_org'] ) . ",
-					`from_depid` = " . $array['from_depid'] . ",
-					`from_signer` = " . $array['from_signer'] . ",
-					`from_time` = " . $array['from_time'] . ",					
-					`date_iss` = " . $array['date_iss'] . ",
-					`date_first` = " . $array['date_first'] . ",
-					`date_die` = " . $array['date_die'] . ",
-					`who_view` = " . $array['who_view'] . ",
-					`groups_view` = " . $db->dbescape( $array['groups_view'] ) . ",
-					`status` = " . $array['statusid'] . " WHERE `id` = " . $id;
+                $sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET 
+                    catid = " . $array['parentid'] . ",
+                    type = " . $array['type'] . ",                    
+                    title = " . $db->quote( $array['title'] ) . ",
+                    alias = '',
+					code = '" . $array['code'] . "',
+					content= " . $db->quote( $array['content'] ) . ",
+					file = " . $db->quote( $array['file'] ) . ",
+					from_org = " . $db->quote( $array['from_org'] ) . ",
+					to_org = " . $db->quote( $array['to_org'] ) . ",
+					from_depid = " . $array['from_depid'] . ",
+					from_signer = " . $array['from_signer'] . ",
+					from_time = " . $array['from_time'] . ",					
+					date_iss = " . $array['date_iss'] . ",
+					date_first = " . $array['date_first'] . ",
+					date_die = " . $array['date_die'] . ",
+					groups_view = " . $array['groups_view'] . ",
+					status = " . $array['statusid'] . " WHERE id = " . $id;
                 
-                if ( $db->sql_query( $sql ) )
+                if ( $db->query( $sql ) )
                 {
-                    $db->sql_query( "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_de_do` WHERE `doid` =" . $id );
-                    $query = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_document` SET 
-                		`alias`=" . $db->dbescape( $array['alias'] . "-" . $id ) . " WHERE `id`=" . $id;
-                    $db->sql_query( $query );
+                    $db->query( "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_de_do WHERE doid =" . $id );
+                    $query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET 
+                		alias=" . $db->quote( $array['alias'] . "-" . $id ) . " WHERE id=" . $id;
+                    $db->query( $query );
                     
                     if ( ! empty( $listde ) )
                     {
                         foreach ( $listde as $k  )
                         {
                             
-                            $sql1 = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_de_do` VALUES (
+                            $sql1 = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_de_do VALUES (
 								NULL,					
 								" . $id . ", 
 								" . $k . "		
 								)";
                             
-                            $db->sql_query( $sql1 );
+                            $db->query( $sql1 );
                         }
                     }
                     
-                    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main" );
+                    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main" );
                     exit();
                 
                 }
@@ -273,46 +250,48 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
             }
             else
             {
-                $sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_document` VALUES (
+                $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_document VALUES (
 					NULL, 
 					" . $array['type'] . ", 
 					" . $array['parentid'] . ",'',
-					" . $db->dbescape( $array['title'] ) . ",
-					" . $db->dbescape( $array['code'] ) . ",
-					" . $db->dbescape( $array['content'] ) . ",
-					" . $db->dbescape( $array['file'] ) . ",
-					" . $db->dbescape( $array['from_org'] ) . "," . $array['from_depid'] . ",
+					" . $db->quote( $array['title'] ) . ",
+					" . $db->quote( $array['code'] ) . ",
+					" . $db->quote( $array['content'] ) . ",
+					" . $db->quote( $array['file'] ) . ",
+					" . $db->quote( $array['from_org'] ) . "," . $array['from_depid'] . ",
 					" . $array['from_signer'] . ",
 					" . $array['from_time'] . ",
 					" . $array['date_iss'] . ",
 					" . $array['date_first'] . ",
-					" . $array['date_die'] . "," . $db->dbescape( $array['to_org'] ) . "," . $array['who_view'] . "," . $db->dbescape( $array['groups_view'] ) . "," . $array['statusid'] . ",0
-					)";
-                
-                $array['id'] = $db->sql_query_insert_id( $sql );
+					" . $array['date_die'] . ",
+					" . $db->quote( $array['to_org'] ) . ",
+					" . $db->quote( $array['groups_view'] ) . ",
+					" . $array['statusid'] . ", 0 )";
+
+                $array['id'] = $db->insert_id( $sql );
                 
                 if ( $array['id'] > 0 )
                 {
-                    $query = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_document` SET 
-                	`alias`=" . $db->dbescape( $array['alias'] . "-" . $array['id'] ) . " WHERE `id`=" . $array['id'];
-                    $db->sql_query( $query );
+                    $query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET 
+                	alias=" . $db->quote( $array['alias'] . "-" . $array['id'] ) . " WHERE id=" . $array['id'];
+                    $db->query( $query );
                     if ( ! empty( $listde ) )
                     {
                         foreach ( $listde as $k  )
                         {
                             
-                            $sql1 = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_de_do` VALUES (
+                            $sql1 = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_de_do VALUES (
 							NULL,					
 							" . $array['id'] . ",
 							" . $k . "					
 							 					
 							)";
                             
-                            $db->sql_query( $sql1 );
+                            $db->query( $sql1 );
                         }
                     }
                     
-                    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main" );
+                    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main" );
                     exit();
                 
                 }
@@ -321,44 +300,6 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
                     $error = $lang_module['error_insert'];
                 }
             }
-        }
-    }
-}
-
-$who_view = $array['who_view'];
-$arrs['who_view'] = array();
-
-foreach ( $array_who as $key => $who )
-{
-    $arrs['who_view'][] = array( 
-        'key' => $key, //
-		'title' => $who, //
-		'selected' => $key == $who_view ? " selected=\"selected\"" : ""  //
-    );
-}
-
-$groups_view = $array['groups_view'];
-
-$arrs['groups_view'] = array();
-if ( ! empty( $groups_list ) )
-{
-    foreach ( $groups_list as $key => $title )
-    {
-        if ( ! empty( $groups_view ) )
-        {
-            $arrs['groups_view'][] = array( 
-                'key' => $key, //
-				'title' => $title, //
-				'checked' => in_array( $key, $array['groups_view'] ) ? " checked=\"checked\"" : ""  //
-            );
-        }
-        else
-        {
-            $arrs['groups_view'][] = array( 
-                'key' => $key, //
-'title' => $title, //
-'checked' => ""  //
-            );
         }
     }
 }
@@ -375,51 +316,35 @@ $listdes = $listdes + nv_listdes( $array['from_depid'], 0 );
 
 $listsinger = nv_signerList( $array['from_signer'] );
 
+$array['date_die'] = $array['date_die'] ? nv_date( 'd/m/Y', $array['date_die'] ) : '';
+
 foreach ( $listdes as $li )
 {
-    if ( ! empty( $listdes ) )
-    {
-        foreach ( $listde as $l )
-        {
-            if ( $l == $li['id'] )
-            {
-                $check = ' checked= "checked" '; 
-            }
-            else
-            {
-                $check = '';
-            }
-        
-        }
-    }
-    else
-    {
-        $check = '';
-    }
     if ( $li['id'] != 0 )
     {
         $lis[] = array( 
             'id' => ( int )$li['id'], //			
 			'alias' => $li['alias'], //
 			'name' => $li['title'], // 
-			'checked' => $check, //
-
+			'checked' => in_array( $li['id'], $listde ) ? 'checked="checked"' : ''
         );
     }
-
 }
 
 foreach ( $arr_status as $a )
 {
     $as[] = array( 
         'id' => $a['id'], //
-'name' => $a['name'], //
-'selected' => $a['id'] == $array['statusid'] ? " selected=\"selected\"" : ""  //
+        'name' => $a['name'], //
+        'selected' => $a['id'] == $array['statusid'] ? " selected=\"selected\"" : ""  //
     );
 }
+
 $xtpl = new XTemplate( "add_document.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
+$xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
+$xtpl->assign( 'NV_LANG_INTERFACE', NV_LANG_INTERFACE );
 $xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
 $xtpl->assign( 'NV_OP_VARIABLE', NV_OP_VARIABLE );
 $xtpl->assign( 'MODULE_NAME', $module_name );
@@ -427,7 +352,7 @@ $xtpl->assign( 'OP', $op );
 $xtpl->assign( 'id', $id );
 $xtpl->assign( 'FILES_DIR', NV_UPLOADS_DIR . '/' . $module_name );
 $xtpl->assign( 'fileupload_num', $fileupload_num );
-$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
 
 if ( $array['from_time'] != '' )
 {
@@ -481,11 +406,23 @@ foreach ( $as as $a )
     $xtpl->parse( 'inter.statusid' );
 }
 
+$groups_view = explode( ',', $array['groups_view'] );
+foreach( $groups_list as $_group_id => $_title )
+{
+	$xtpl->assign( 'groups_view', array(
+		'value' => $_group_id,
+		'checked' => in_array( $_group_id, $groups_view ) ? ' checked="checked"' : '',
+		'title' => $_title
+	) );
+	$xtpl->parse( 'inter.groups_view' );
+}
+
 foreach ( $lis as $de )
 {
     $xtpl->assign( 'ROW', $de );
     $xtpl->parse( 'inter.loop' );
 }
+
 $a = 0;
 if ( ! empty( $arr_imgs ) )
 {
@@ -509,78 +446,33 @@ if ( ! empty( $arr_imgs ) )
     {
         $xtpl->parse( 'inter.fileupload' );
     }
-
 }
 else
 {
     $xtpl->parse( 'inter.fileupload' );
 }
+
 if ( $error != '' )
 {
 	
     $xtpl->assign( 'ERROR', $error );
     $xtpl->parse( 'inter.error' );
 }
-foreach ( $arrs['who_view'] as $who )
-{
-    $xtpl->assign( 'WHO_VIEW', $who );
-    $xtpl->parse( 'inter.who_view' );
-}
-if ( $nv_Request->isset_request( 'who', 'post' ) )
-{
-    $whos = $nv_Request->get_int( 'who', 'post', 0 );
-    if ( $whos == 3 )
-    {
-        if ( ! empty( $arrs['groups_view'] ) )
-        {
-            foreach ( $arrs['groups_view'] as $group )
-            {
-                $xtpl->assign( 'GROUPS_VIEW', $group );
-                $xtpl->parse( 'inter.group_view_empty.groups_view' );
-            }
-            $xtpl->parse( 'inter.group_view_empty' );
-            $contents = $xtpl->text( 'inter.group_view_empty' );
-        }
-    }
-    else
-    {
-        $contents = '';
-    }
-    include ( NV_ROOTDIR . "/includes/header.php" );
-    echo $contents;
-    include ( NV_ROOTDIR . "/includes/footer.php" );
-    exit();
-}
-
-if ( ! empty( $array['groups_view'] )  && $array['who_view']==3)
-{
-    if ( ! empty( $arrs['groups_view'] ) )
-    {
-        foreach ( $arrs['groups_view'] as $group )
-        {
-            $xtpl->assign( 'GROUPS_VIEW', $group );
-            $xtpl->parse( 'inter.group_view_empty.groups_view' );
-        }
-        $xtpl->parse( 'inter.group_view_empty' );
-        $contents = $xtpl->text( 'inter.group_view_empty' );
-    }
-}
 
 if ( $nv_Request->isset_request( 'action', 'post' ) )
 {
     $signer = $nv_Request->get_int( 'singer', 'post', 0 );
-    $sql = "SELECT `positions` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_signer` WHERE `id`=" . $signer;
-    $result = $db->sql_query( $sql );
-    list( $position ) = $db->sql_fetchrow( $result );
+    $sql = "SELECT positions FROM " . NV_PREFIXLANG . "_" . $module_data . "_signer WHERE id=" . $signer;
+    $result = $db->query( $sql );
+    $position = $result->fetchColumn();
     die( $lang_module['positions'] . ": " . $position );
 }
+
 $xtpl->parse( 'inter' );
 $contents = $xtpl->text( 'inter' );
 
 $page_title = $lang_module['add_document'];
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

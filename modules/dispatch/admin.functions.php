@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
@@ -84,9 +85,9 @@ function nv_listcats ( $parentid, $m = 0 )
     
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_cat` ORDER BY `parentid`,`weight` ASC";
     
-    $result = $db->sql_query( $sql );
+    $result = $db->query( $sql );
     $list = array();
-    while ( $row = $db->sql_fetchrow( $result ) )
+    while ( $row = $result->fetch() )
     {
         $list[$row['parentid']][] = array(  //
             'id' => ( int )$row['id'], //
@@ -173,9 +174,9 @@ function nv_listtypes ( $parentid, $m = 0 )
     
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_type` ORDER BY `parentid`,`weight` ASC";
     
-    $result = $db->sql_query( $sql );
+    $result = $db->query( $sql );
     $list = array();
-    while ( $row = $db->sql_fetchrow( $result ) )
+    while ( $row = $result->fetch() )
     {
         $list[$row['parentid']][] = array(  //
             'id' => ( int )$row['id'], //
@@ -262,9 +263,9 @@ function nv_listdes ( $parentid, $m = 0 )
     
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_departments` ORDER BY `parentid`,`weight` ASC";
     
-    $result = $db->sql_query( $sql );
+    $result = $db->query( $sql );
     $list = array();
-    while ( $row = $db->sql_fetchrow( $result ) )
+    while ( $row = $result->fetch() )
     {
         $list[$row['parentid']][] = array(  //
             'id' => ( int )$row['id'], //
@@ -307,9 +308,9 @@ function nv_signerList($idsigner)
     global $db, $module_data;
 
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_signer` ORDER BY `weight` ASC";
-    $result = $db->sql_query( $sql );
+    $result = $db->query( $sql );
     $list = array();
-    while ( $row = $db->sql_fetchrow( $result ) )
+    while ( $row = $result->fetch() )
     {
         $list[$row['id']] = array( //
         	'id' => $row['id'],
@@ -328,13 +329,13 @@ function fix_signerWeight()
     global $db, $module_data;
 
     $sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_signer` ORDER BY `weight` ASC";
-    $result = $db->sql_query( $sql );
+    $result = $db->query( $sql );
     $weight = 0;
-    while ( $row = $db->sql_fetchrow( $result ) )
+    while ( $row = $result->fetch() )
     {
         $weight++;
         $query = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_signer` SET `weight`=" . $weight . " WHERE `id`=" . $row['id'];
-        $db->sql_query( $query );
+        $db->query( $query );
     }
 }
 

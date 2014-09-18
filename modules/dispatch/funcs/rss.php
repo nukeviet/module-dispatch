@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
@@ -47,8 +48,8 @@ else
 
 if ( $module_info['rss'] )
 {
-    $result = $db->sql_query( $sql );
-    while ( list( $id, $listcatid, $publtime, $title, $alias, $hometext, $homeimgfile ) = $db->sql_fetchrow( $result ) )
+    $result = $db->query( $sql );
+    while ( list( $id, $listcatid, $publtime, $title, $alias, $hometext, $homeimgfile ) = $result->fetch( 3 ) )
     {
         $arr_catid = explode( ',', $listcatid );
         $catid_i = end( $arr_catid );
@@ -67,4 +68,3 @@ if ( $module_info['rss'] )
 
 nv_rss_generate( $channel, $items );
 die();
-?>

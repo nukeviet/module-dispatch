@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
@@ -54,8 +55,8 @@ $lang_module['dis_status'] = "Trạng thái";
 $lang_module['dis_person'] = "Người ký";
 $lang_module['dis_de'] = "Phòng ban nhận";
 
-$lang_module['dis_sta1']="Chưa sử lý";
-$lang_module['dis_sta0']="Đã sử lý";
+$lang_module['dis_sta1']="Chưa xử lý";
+$lang_module['dis_sta0']="Đã xử lý";
 $lang_module['dis_sta2']="Để lưu";
 $lang_module['browse']="Chọn file";
 $lang_module['add_button']="Thêm file";

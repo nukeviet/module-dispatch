@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
@@ -16,25 +17,24 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
     
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     
-    if ( ! $id ) die( "NO" );
+    if ( ! $id ) die( 'NO' );
     
-    $query = "SELECT `title` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_document` WHERE `id`=" . $id;
-    $result = $db->sql_query( $query );
-    $numrows = $db->sql_numrows( $result );
+    $query = "SELECT title FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id;
+    $result = $db->query( $query );
+    $numrows = $result->rowCount();
     
     if ( $numrows > 0 )
     {
-        $sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_document` WHERE `id`=" . $id;
-        $db->sql_query( $sql );
+        $sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id;
+        $db->query( $sql );
     }
     
-    die( "OK" );
+    die( 'OK' );
 
 }
 
 $edit = $error = '';
 // List product
-$my_head = "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/popcalendar/popcalendar.js\"></script>\n";
 $my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.js\"></script>\n";
 $my_head .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.css\" />\n";
 $my_head .= "<script type=\"text/javascript\">\n";
@@ -48,14 +48,14 @@ $my_head .= "</script>\n";
 
 $from = $to = $type = 0;
 
-$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_document` WHERE `id`!=0";
-$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name;
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id!=0";
+$base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name;
 
 $listcats = nv_listcats( 0 );
 
 if ( empty( $listcats ) )
 {
-    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=cat&add=1" );
+    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=cat&add=1" );
     exit();
 }
 
@@ -63,7 +63,7 @@ $listdes = nv_listdes( 0 );
 
 if ( empty( $listdes ) )
 {
-    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=departments&add=1" );
+    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=departments&add=1" );
     exit();
 }
 
@@ -71,7 +71,7 @@ $listtypes = nv_listtypes( $type,0 );
 
 if ( empty( $listtypes ) )
 {
-    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=tyes&add=1" );
+    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=tyes&add=1" );
     exit();
 }
 
@@ -79,7 +79,7 @@ $listsinger = nv_signerList( 0 );
 
 if ( empty( $listsinger ) )
 {
-    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer&add" );
+    Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer&add" );
     exit();
 }
 
@@ -90,12 +90,12 @@ if ( $nv_Request->isset_request( "type", "get" ) )
     $type = $nv_Request->get_int( 'type', 'get', 0 );
     if ( ! $type or ! isset( $listtypes[$type] ) )
     {
-        Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name );
+        Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
         exit();
     }
     
     $page_title = sprintf( $lang_module['cv_list_by_type'], $listtypes[$type]['title'] );
-    $sql .= " AND `type`=" . $type;
+    $sql .= " AND type=" . $type;
     $base_url .= "&amp;type=" . $type;
 }
 
@@ -105,12 +105,12 @@ if ( $nv_Request->isset_request( "catid", "get" ) )
     
     if ( ! $catid or ! isset( $listcats[$catid] ) )
     {
-        Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name );
+        Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
         exit();
     }
     
     $page_title = sprintf( $lang_module['product_list_by_cat'], $listcats[$catid]['title'] );
-    $sql .= " AND `catid`=" . $catid;
+    $sql .= " AND catid=" . $catid;
     $base_url .= "&amp;catid=" . $catid;
 }
 if ( $nv_Request->isset_request( "signer", "get" ) )
@@ -119,19 +119,19 @@ if ( $nv_Request->isset_request( "signer", "get" ) )
     
     if ( ! $signer or ! isset( $listsinger[$signer] ) )
     {
-        Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name );
+        Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
         exit();
     }
     
     $page_title = sprintf( $lang_module['product_list_by_signer'], $listsinger[$signer]['name'] );
-    $sql .= " AND `from_signer`=" . $signer;
+    $sql .= " AND from_signer=" . $signer;
     $base_url .= "&amp;signer=" . $signer;
 }
 
 
 if ( $nv_Request->isset_request( "from", "get" ) )
 {
-    $from = filter_text_input( 'from', 'post,get', '' );
+    $from = $nv_Request->get_title( 'from', 'get,post', '' );
     
     unset( $m );
     if ( preg_match( "/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/", $from, $m ) )
@@ -147,13 +147,13 @@ if ( $nv_Request->isset_request( "from", "get" ) )
     {
         //die($year.'');
         
-        $sql .= " AND `from_time` >= " . $from;
+        $sql .= " AND from_time >= " . $from;
         $base_url .= "&amp;from =" . $from;
     }
 }
 if ( $nv_Request->isset_request( "to", "get" ) )
 {
-    $to = filter_text_input( 'to', 'post,get', '' );
+    $to = $nv_Request->get_title( 'to', 'get,post', '' );
     
     unset( $m );
     if ( preg_match( "/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/", $to, $m ) )
@@ -168,33 +168,33 @@ if ( $nv_Request->isset_request( "to", "get" ) )
     {
         //die($year.'');
         
-        $sql .= " AND `from_time` <= " . $to;
+        $sql .= " AND from_time <= " . $to;
         $base_url .= "&amp;to=" . $to;
     }
 }
 
 $sql1 = "SELECT COUNT(*) " . $sql;
 
-$result1 = $db->sql_query( $sql1 );
-list( $all_page ) = $db->sql_fetchrow( $result1 );
+$result1 = $db->query( $sql1 );
+$all_page = $result1->fetchColumn();
 
 if ( ! $all_page )
 {
     $error = 'Không có dữ liệu như bạn tìm';
 }
 
-$sql .= " ORDER BY `from_time` DESC";
+$sql .= " ORDER BY from_time DESC";
 
 $page = $nv_Request->get_int( 'page', 'get', 0 );
 $per_page = 30;
 
 $sql2 = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
-$query2 = $db->sql_query( $sql2 );
+$query2 = $db->query( $sql2 );
 
 $array = array();
 $i = 0;
 
-while ( $row = $db->sql_fetchrow( $query2 ) )
+while ( $row = $query2->fetch() )
 {
     $i = $i + 1;
     if ( $row['type'] == 0 )
@@ -227,10 +227,10 @@ while ( $row = $db->sql_fetchrow( $query2 ) )
 		'cat' => $listcats[$row['catid']]['title'], //
 		'type' => $listtypes[$row['type']]['title'], //
     	'from_signer' =>$listsinger[$row['from_signer']]['name'],//
-    	'link_singer' => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;signer=" . $row['from_signer'], //	
+    	'link_singer' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;signer=" . $row['from_signer'], //	
 		'content' => $content, //
-		'link_type' => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;type=" . $row['type'], //
-		'link_cat' => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;catid=" . $row['catid'], //		
+		'link_type' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;type=" . $row['type'], //
+		'link_cat' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;catid=" . $row['catid'], //		
 		'from_time' => nv_date( 'd.m.Y', $row['from_time'] ), //	
 		'status' => $arr_status[$row['status']]['name'], //
 		'link_detail' => NV_BASE_SITEURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;op=detail/" . $row['alias'], 'edit' => $edit 
@@ -241,7 +241,8 @@ $generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
 
 $xtpl = new XTemplate( $op . ".tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
+$xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
+$xtpl->assign( 'NV_LANG_INTERFACE', NV_LANG_INTERFACE );
 $xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
 $xtpl->assign( 'NV_OP_VARIABLE', NV_OP_VARIABLE );
 $xtpl->assign( 'MODULE_NAME', $module_name );
@@ -258,7 +259,7 @@ if ( ! empty( $array ) )
         $xtpl->assign( 'CLASS', $a % 2 == 1 ? " class=\"second\"" : "" );
         $xtpl->assign( 'ROW', $row );
         
-        $xtpl->assign( 'EDIT_URL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;&op=add_document" . $row['edit'] );
+        $xtpl->assign( 'EDIT_URL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;&op=add_document" . $row['edit'] );
         
         if ( ! empty( $row['images'] ) )
         {
@@ -312,8 +313,6 @@ if ( ! empty( $generate_page ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

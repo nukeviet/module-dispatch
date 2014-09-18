@@ -2,37 +2,29 @@
 <script type="text/javascript">
 	var cat_del_cofirm = "{LANG.cat_del}";
 </script>
-<div style="margin-top:8px;">
-    <a class="button1" href="{ADD_NEW_CAT}"><span><span>{LANG.cat_add}</span></span></a>
-</div>
-<div class="clear"></div>
+
 <div id="users">
-    <table class="tab1">
+    <table class="table table-striped table-bordered table-hover">
         <caption>{TABLE_CAPTION}</caption>
+        <colgroup>
+        	<col class="w100" />
+        	<col span="2" />
+        	<col span="2" class="w150" />
+        </colgroup>
         <thead>
             <tr>
-                <td>
-                    {LANG.cat_sort}
-                </td>
-                <td>
-                    {LANG.cat_name}
-                </td>
-                <td>
-                    {LANG.cat_parent}
-                </td>
-                <td style="width:20px;text-align:center">
-                    {LANG.cat_active}
-                </td>
-                <td style="width:100px;white-space:nowrap;text-align:center">
-                    {LANG.feature}
-                </td>
+                <th>{LANG.cat_sort}</th>
+                <th>{LANG.cat_name}</th>
+                <th>{LANG.cat_parent}</th>
+                <th class="text-center">{LANG.cat_active}</th>
+                <th class="text-center">{LANG.feature}</th>
             </tr>
         </thead>
+        <tbody>
         <!-- BEGIN: row -->
-        <tbody{ROW.class}>
             <tr>
-                <td style="width:15px">
-                    <select name="weight" id="weight{ROW.id}" onchange="nv_chang_cat_weight({ROW.id});">
+                <td>
+                    <select class="form-control" name="weight" id="weight{ROW.id}" onchange="nv_chang_cat_weight({ROW.id});">
                         <!-- BEGIN: weight -->
                         <option value="{WEIGHT.pos}"{WEIGHT.selected}>{WEIGHT.pos}</option>
                         <!-- END: weight -->
@@ -44,16 +36,19 @@
                 <td>
                     {ROW.parentid}
                 </td>
-                <td style="width:20px;white-space:nowrap;text-align:center">
+                <td class="text-center">
                     <input type="checkbox" name="active" id="change_status{ROW.id}" value="1"{ROW.status} onclick="nv_chang_cat_status({ROW.id});" />
                 </td>
-                <td style="white-space:nowrap;text-align:center">
-                    <span class="edit_icon"><a href="{EDIT_URL}">{GLANG.edit}</a></span>
-                    &nbsp;&nbsp;<span class="delete_icon"><a href="javascript:void(0);" onclick="nv_cat_del({ROW.id});">{GLANG.delete}</a></span>
+                <td class="text-center">
+                    <em class="fa fa-edit fa-lg">&nbsp;</em><a href="{EDIT_URL}">{GLANG.edit}</a> - 
+                    <em class="fa fa-trash-o fa-lg">&nbsp;</em><a href="javascript:void(0);" onclick="nv_cat_del({ROW.id});">{GLANG.delete}</a>
                 </td>
             </tr>
-        </tbody>
         <!-- END: row -->
+        <tbody>
     </table>
 </div>
+
+<a class="btn btn-primary" href="{ADD_NEW_CAT}">{LANG.cat_add}</a>
+
 <!-- END: main -->

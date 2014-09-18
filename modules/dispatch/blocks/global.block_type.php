@@ -1,8 +1,9 @@
 <?php
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES., JSC. All rights reserved
+ * @Copyright (C) 2014 VINADES., JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate 3/9/2010 23:25
  */
 
@@ -67,13 +68,13 @@ if ( ! nv_function_exists( 'nv_type_blocks' ) )
         $a_t1 = array();
         $a_t = array();                  
    		$query = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module . "_type` WHERE `status`=1 AND (`id`=" .$block_config['type']. " OR `parentid`= ".$block_config['type'].")" ;
-    	$re = $db->sql_query( $query );
+    	$re = $db->query( $query );
     	while ($row = $db -> sql_fetchrow($re))
     	{
     		$a_t1[] = $row['id'];
     	}
     	$query = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module . "_type` WHERE `id`=" .$block_config['type'] ." OR `parentid` IN (".implode(',', $a_t1).")";
-    	$re = $db->sql_query( $query );
+    	$re = $db->query( $query );
     	while ($row = $db -> sql_fetchrow($re))
     	{
     		$a_t[] = $row['id'];
@@ -81,13 +82,13 @@ if ( ! nv_function_exists( 'nv_type_blocks' ) )
     	
         $sql = "SELECT id, alias, title,from_time, code, who_view, groups_view,file FROM `" . NV_PREFIXLANG . "_" . $module . "_document` WHERE `type` IN (".implode(',', $a_t).") ORDER BY `date_iss` DESC, `id` DESC LIMIT 0 ," . $block_config['numrow'];
         
-        $result = $db->sql_query( $sql );
-        $chk_topview = $db->sql_numrows( $result );
+        $result = $db->query( $sql );
+        $chk_topview = $result->rowCount();
        	
         if ( $chk_topview )
         {
             
-            while ( $row = $db->sql_fetchrow( $result ) )
+            while ( $row = $result->fetch() )
             {
             	
             	if ( nv_set_allow( $row['who_view'], $row['groups_view'] ))

@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
@@ -23,17 +24,17 @@ if ( isset( $array_op[1] ) and preg_match( "/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $a
     $listcats = nv_listcats( 0 );
     $listdes = nv_listdes( 0 );
     
-    $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_document` WHERE `id`=" . $id . " AND `alias`=" . $db->dbescape( $alias );
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id . " AND alias=" . $db->quote( $alias );
     
-    $result = $db->sql_query( $sql );
-    $num = $db->sql_numrows( $result );
+    $result = $db->query( $sql );
+    $num = $result->rowCount();
     if ( $num != 1 )
     {
         Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, 1 ) );
         exit();
     }
     
-    $row = $db->sql_fetch_assoc( $result );
+    $row = $result->fetch();
     
     $row['cat'] = $listcats[$row['catid']]['title'];
     $row['status'] = $arr_status[$row['status']]['name'];
@@ -63,9 +64,9 @@ if ( isset( $array_op[1] ) and preg_match( "/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $a
         $row['from_depid'] = $listdes[$row['from_depid']]['title'];
     }
     
-    $query = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_document` SET view=view+1 WHERE `id`=" . $id;
+    $query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET view=view+1 WHERE id=" . $id;
    
-    $db->sql_query( $query );
+    $db->query( $query );
     
     $listtypes = nv_listtypes( $row['type'] );    
     
@@ -74,8 +75,8 @@ if ( isset( $array_op[1] ) and preg_match( "/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $a
     $xtpl = new XTemplate( $op . ".tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file . "/" );
     $xtpl->assign( 'LANG', $lang_module );
     $xtpl->assign( 'GLANG', $lang_global );
-    $xtpl->assign( 'MODULE_URL', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main&type=" . $row['type'] );
-    $xtpl->assign( 'MODULE_URL2', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main&type=" . $row['type'] . "&catid=" . $row['catid'] );
+    $xtpl->assign( 'MODULE_URL', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . "&" . NV_OP_VARIABLE . "=main&type=" . $row['type'] );
+    $xtpl->assign( 'MODULE_URL2', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . "&" . NV_OP_VARIABLE . "=main&type=" . $row['type'] . "&catid=" . $row['catid'] );
     $xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
     $xtpl->assign( 'NV_LANG_INTERFACE', NV_LANG_INTERFACE );
     $xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
@@ -86,20 +87,20 @@ if ( isset( $array_op[1] ) and preg_match( "/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $a
     $xtpl->assign( 'detail_title', '<span style="font-weight: bold;">Công văn: ' . $row['code'] . '</span>' );
     $xtpl->assign('template',$module_info['template']);
     $xtpl->assign( 'module', $module_name );
-    $xtpl->assign( 'MODULE_LINK', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name  );
+    $xtpl->assign( 'MODULE_LINK', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name  );
     
-    $xtpl->assign( 'TYPELINK', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main&type=".$row['type'] );
+    $xtpl->assign( 'TYPELINK', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main&type=" . $row['type'] );
     $xtpl->assign( 'TYPENAME', $listtypes[$row['type']]['title'] );
     $xtpl->parse( 'main.if_cat' );  
    
     
     $xtpl->assign( 'ROW', $row );
     
-    $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_de_do` WHERE `doid`=" . $id ;
-    $re = $db->sql_query($sql);
-    if ($db->sql_numrows($re))
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_de_do WHERE doid=" . $id ;
+    $re = $db->query($sql);
+    if ($re->rowCount())
     {
-    	while ($ro = $db->sql_fetchrow($re))
+    	while ($ro = $re->fetch())
     	{
     		$listdes = nv_listdes( $ro['deid'] );
     		
@@ -121,14 +122,14 @@ if ( isset( $array_op[1] ) and preg_match( "/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $a
         $xtpl->parse( 'main.taifile' );    	
     }
     
-    $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_de_do` WHERE `doid`=" . $id;
-    $result = $db->sql_query( $sql );
-    $num = $db->sql_numrows( $result );
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_de_do WHERE doid=" . $id;
+    $result = $db->query( $sql );
+    $num = $result->rowCount();
     $i = 0;
     if ( $num > 0 )
     {
         $xtpl->assign( 'de_title', $lang_module['list_de'] );
-        while ( $row = $db->sql_fetchrow( $result ) )
+        while ( $row = $result->fetch() )
         {
             $i = $i + 1;
             $row['stt'] = $i;
@@ -143,9 +144,9 @@ if ( isset( $array_op[1] ) and preg_match( "/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $a
     $xtpl->parse( 'main' );
     $contents = $xtpl->text( 'main' );
     
-    include ( NV_ROOTDIR . "/includes/header.php" );
+    include NV_ROOTDIR . '/includes/header.php';
     echo nv_site_theme( $contents );
-    include ( NV_ROOTDIR . "/includes/footer.php" );
+    include NV_ROOTDIR . '/includes/footer.php';
 
 }
 else
@@ -153,5 +154,3 @@ else
     Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, 1 ) );
     exit();
 }
-
-?>
