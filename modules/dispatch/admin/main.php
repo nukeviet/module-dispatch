@@ -256,9 +256,8 @@ if ( ! empty( $array ) )
     $a = 0;
     foreach ( $array as $row )
     {
-        $xtpl->assign( 'CLASS', $a % 2 == 1 ? " class=\"second\"" : "" );
+    	$row['title0'] = nv_clean60( $row['title'], 70 ); 
         $xtpl->assign( 'ROW', $row );
-        
         $xtpl->assign( 'EDIT_URL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;&op=add_document" . $row['edit'] );
         
         if ( ! empty( $row['images'] ) )

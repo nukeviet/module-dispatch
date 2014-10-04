@@ -12,7 +12,6 @@ if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 if ( ! nv_function_exists( 'nv_dispathch_category' ) )
 {
-
     function nv_block_config_dispathch_category ( $module, $data_block, $lang_block )
     {
         global $db, $language_array;
@@ -124,10 +123,7 @@ if ( defined( 'NV_SYSTEM' ) )
 	            }
 	            
             }
-            
         
         $content = nv_dispathch_category( $block_config );
     }
 }
-
-?>

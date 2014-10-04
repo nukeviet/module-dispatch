@@ -33,8 +33,11 @@
 		<caption>{TABLE_CAPTION}</caption>
 		<colgroup>
 			<col class="w50" />
-			<col span="5" />
-			<col span="3" class="w150" />
+			<col class="w250" />
+			<col span="4" />
+			<col class="w100" />
+			<col class="w100" />
+			<col class="w150" />
 		</colgroup>
 		<thead>
 			<tr>
@@ -54,7 +57,7 @@
 			<!-- BEGIN: row -->
 			<tr>
 				<td class="text-center"> {ROW.stt} </td>
-				<td> {ROW.title} </td>
+				<td> {ROW.title0} </td>
 				<td> {ROW.code} </td>
 				<td><a href="{ROW.link_type}">{ROW.type}</a></td>
 				<td><a href="{ROW.link_cat}">{ROW.cat}</a></td>
