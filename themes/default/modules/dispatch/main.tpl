@@ -90,7 +90,7 @@
 				<td> {ROW.to_org} </td>
 				<td>
 					<!-- BEGIN: loop1 -->
-					<a href="{NV_BASE_SITEURL}uploads/{module}/{FILEUPLOAD}" style="text-decoration: none;"><image src="{NV_BASE_SITEURL}themes/{template}/images/{module}/download.png" title={FILEUPLOAD}></a>
+					<a href="{NV_BASE_SITEURL}uploads/{module}/{FILEUPLOAD}" title="Download"><em class="fa fa-download">&nbsp;</em></a>
 					<!-- END: loop1 -->
 				</td>
 			</tr>
