@@ -14,21 +14,21 @@ if ( ! defined( 'NV_IS_FILE_ADMIN' ) ) die( 'Stop!!!' );
 if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
+
     $id = $nv_Request->get_int( 'id', 'post', 0 );
-    
+
     if ( ! $id ) die( 'NO' );
-    
+
     $query = "SELECT title FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id;
     $result = $db->query( $query );
     $numrows = $result->rowCount();
-    
+
     if ( $numrows > 0 )
     {
         $sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id;
         $db->query( $sql );
     }
-    
+
     die( 'OK' );
 
 }
@@ -93,7 +93,7 @@ if ( $nv_Request->isset_request( "type", "get" ) )
         Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
         exit();
     }
-    
+
     $page_title = sprintf( $lang_module['cv_list_by_type'], $listtypes[$type]['title'] );
     $sql .= " AND type=" . $type;
     $base_url .= "&amp;type=" . $type;
@@ -102,13 +102,13 @@ if ( $nv_Request->isset_request( "type", "get" ) )
 if ( $nv_Request->isset_request( "catid", "get" ) )
 {
     $catid = $nv_Request->get_int( 'catid', 'get', 0 );
-    
+
     if ( ! $catid or ! isset( $listcats[$catid] ) )
     {
         Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
         exit();
     }
-    
+
     $page_title = sprintf( $lang_module['product_list_by_cat'], $listcats[$catid]['title'] );
     $sql .= " AND catid=" . $catid;
     $base_url .= "&amp;catid=" . $catid;
@@ -116,13 +116,13 @@ if ( $nv_Request->isset_request( "catid", "get" ) )
 if ( $nv_Request->isset_request( "signer", "get" ) )
 {
     $signer = $nv_Request->get_int( 'signer', 'get', 0 );
-    
+
     if ( ! $signer or ! isset( $listsinger[$signer] ) )
     {
         Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
         exit();
     }
-    
+
     $page_title = sprintf( $lang_module['product_list_by_signer'], $listsinger[$signer]['name'] );
     $sql .= " AND from_signer=" . $signer;
     $base_url .= "&amp;signer=" . $signer;
@@ -132,7 +132,7 @@ if ( $nv_Request->isset_request( "signer", "get" ) )
 if ( $nv_Request->isset_request( "from", "get" ) )
 {
     $from = $nv_Request->get_title( 'from', 'get,post', '' );
-    
+
     unset( $m );
     if ( preg_match( "/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/", $from, $m ) )
     {
@@ -142,11 +142,11 @@ if ( $nv_Request->isset_request( "from", "get" ) )
     {
         $from = 0;
     }
-    
+
     if ( $from != 0 )
     {
         //die($year.'');
-        
+
         $sql .= " AND from_time >= " . $from;
         $base_url .= "&amp;from =" . $from;
     }
@@ -154,7 +154,7 @@ if ( $nv_Request->isset_request( "from", "get" ) )
 if ( $nv_Request->isset_request( "to", "get" ) )
 {
     $to = $nv_Request->get_title( 'to', 'get,post', '' );
-    
+
     unset( $m );
     if ( preg_match( "/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/", $to, $m ) )
     {
@@ -167,7 +167,7 @@ if ( $nv_Request->isset_request( "to", "get" ) )
 	if ( $to != 0 )
     {
         //die($year.'');
-        
+
         $sql .= " AND from_time <= " . $to;
         $base_url .= "&amp;to=" . $to;
     }
@@ -209,11 +209,11 @@ while ( $row = $query2->fetch() )
     {
         $edit = "&inter=1&id=" . $row['id'];
     }
-    
+
     if ( strlen( $row['content'] ) > 100 )
     {
         $content = nv_clean60( $row['content'], 100 );
-    
+
     }
     else
     {
@@ -227,13 +227,14 @@ while ( $row = $query2->fetch() )
 		'cat' => $listcats[$row['catid']]['title'], //
 		'type' => $listtypes[$row['type']]['title'], //
     	'from_signer' =>$listsinger[$row['from_signer']]['name'],//
-    	'link_singer' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;signer=" . $row['from_signer'], //	
+    	'link_singer' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;signer=" . $row['from_signer'], //
 		'content' => $content, //
 		'link_type' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;type=" . $row['type'], //
-		'link_cat' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;catid=" . $row['catid'], //		
-		'from_time' => nv_date( 'd.m.Y', $row['from_time'] ), //	
+		'link_cat' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;catid=" . $row['catid'], //
+		'from_time' => nv_date( 'd.m.Y', $row['from_time'] ), //
 		'status' => $arr_status[$row['status']]['name'], //
-		'link_detail' => NV_BASE_SITEURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;op=detail/" . $row['alias'], 'edit' => $edit 
+		'link_detail' => nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . "=" . $module_name . "&amp;op=detail/" . $row['alias'], true ),
+		'edit' => $edit
     );
 }
 
@@ -256,15 +257,15 @@ if ( ! empty( $array ) )
     $a = 0;
     foreach ( $array as $row )
     {
-    	$row['title0'] = nv_clean60( $row['title'], 70 ); 
+    	$row['title0'] = nv_clean60( $row['title'], 70 );
         $xtpl->assign( 'ROW', $row );
         $xtpl->assign( 'EDIT_URL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;&op=add_document" . $row['edit'] );
-        
+
         if ( ! empty( $row['images'] ) )
         {
             $xtpl->parse( 'main.row.img' );
         }
-        
+
         $xtpl->parse( 'main.row' );
         $a ++;
     }
