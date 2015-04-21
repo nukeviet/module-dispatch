@@ -18,7 +18,7 @@ if ( ! defined( 'NV_IS_MOD_CONGVAN' ) ) die( 'Stop!!!' );
  */
 function nv_theme_congvan_main ( $error, $array, $page_title, $base_url, $all_page, $per_page, $page, $type, $se, $to, $from, $from_signer, $content, $code )
 {
-	global $global_config, $module_name, $module_file, $lang_module, $module_config, $module_info, $op, $arr_type, $db;
+	global $global_config, $module_name, $module_file, $module_data, $lang_module, $module_config, $module_info, $op, $arr_type, $db;
 
 	$xtpl = new XTemplate( $op . ".tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'MODULE_LINK', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name );
@@ -57,7 +57,7 @@ function nv_theme_congvan_main ( $error, $array, $page_title, $base_url, $all_pa
 
         if ( $type != 0 )
         {
-        	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_name . "_type` WHERE `parentid`=" . $type;
+        	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_type` WHERE `parentid`=" . $type;
         	$result = $db->query( $sql );
         	if ( $result->rowCount() > 0 )
         	{
