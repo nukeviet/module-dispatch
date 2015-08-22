@@ -347,6 +347,7 @@ $xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
 $xtpl->assign( 'NV_LANG_INTERFACE', NV_LANG_INTERFACE );
 $xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
 $xtpl->assign( 'NV_OP_VARIABLE', NV_OP_VARIABLE );
+$xtpl->assign( 'NV_ASSETS_DIR', NV_ASSETS_DIR );
 $xtpl->assign( 'MODULE_NAME', $module_name );
 $xtpl->assign( 'OP', $op );
 $xtpl->assign( 'id', $id );

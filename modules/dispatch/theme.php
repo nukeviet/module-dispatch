@@ -28,6 +28,7 @@ function nv_theme_congvan_main ( $error, $array, $page_title, $base_url, $all_pa
 	$xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
 	$xtpl->assign( 'template', $module_info['template'] );
 	$xtpl->assign( 'module', $module_name );
+	$xtpl->assign( 'NV_ASSETS_DIR', NV_ASSETS_DIR );
 
 	$xtpl->assign( 'MODULE_NAME', $module_name );
 	$xtpl->assign( 'SE_LINK', NV_BASE_SITEURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;se=1" );
@@ -40,7 +41,7 @@ function nv_theme_congvan_main ( $error, $array, $page_title, $base_url, $all_pa
 
 	$listsinger = array(
 	array(
-        'id' => 0, 'name' => $lang_module['singer0'], 'selected' => '' 
+        'id' => 0, 'name' => $lang_module['singer0'], 'selected' => ''
         )
         );
         $listsinger = $listsinger + nv_signerList( $from_signer );
@@ -129,7 +130,7 @@ function nv_theme_congvan_main ( $error, $array, $page_title, $base_url, $all_pa
         		foreach ( $array as $row )
         		{
         			if (nv_date('d.m.Y',$row['from_times'])== nv_date('d.m.Y',NV_CURRENTTIME))
-        			{        				
+        			{
         				$xtpl->assign( 'CLASS', " class=\"r1\"" );
         			}
         			else if (nv_date('m.Y',$row['from_times'])== nv_date('m.Y',NV_CURRENTTIME) && (nv_date('d',NV_CURRENTTIME)- nv_date('d',$row['from_times'])==1) )

@@ -11,13 +11,6 @@
 if( !defined( 'NV_IS_MOD_CONGVAN' ) )
 	die( 'Stop!!!' );
 
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.js\"></script>\n";
-$my_head .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.css\" />\n";
-$my_head .= "<script type=\"text/javascript\">\n";
-$my_head .= "Shadowbox.init({\n";
-$my_head .= "});\n";
-$my_head .= "</script>\n";
-
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $se = $from = $to = $from_signer = 0;

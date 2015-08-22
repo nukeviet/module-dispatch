@@ -35,12 +35,6 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 
 $edit = $error = '';
 // List product
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.js\"></script>\n";
-$my_head .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.css\" />\n";
-$my_head .= "<script type=\"text/javascript\">\n";
-$my_head .= "Shadowbox.init({\n";
-$my_head .= "});\n";
-$my_head .= "</script>\n";
 $my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "modules/" . $module_file . "/js/easyTooltip.js\"></script>\n";
 $my_head .= "<script type=\"text/javascript\">\n";
 $my_head .= "$(document).ready(function(){ $(\".cusnote\").easyTooltip(); });\n";
@@ -246,6 +240,7 @@ $xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
 $xtpl->assign( 'NV_LANG_INTERFACE', NV_LANG_INTERFACE );
 $xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
 $xtpl->assign( 'NV_OP_VARIABLE', NV_OP_VARIABLE );
+$xtpl->assign( 'NV_ASSETS_DIR', NV_ASSETS_DIR );
 $xtpl->assign( 'MODULE_NAME', $module_name );
 $xtpl->assign( 'TABLE_CAPTION', $lang_module['table'] );
 $xtpl->assign( 'OP', $op );
