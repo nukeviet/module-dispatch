@@ -34,7 +34,7 @@ if( $nv_Request->isset_request( 'cWeight, id', 'post' ) )
 	$sql = "SELECT id FROM " . NV_PREFIXLANG . "_" . $module_data . "_signer WHERE id!=" . $id . " ORDER BY weight ASC";
 	$result = $db->query( $sql );
 	$weight = 0;
-	
+
 	while( $row = $result->fetch( ) )
 	{
 		$weight++;
@@ -43,7 +43,7 @@ if( $nv_Request->isset_request( 'cWeight, id', 'post' ) )
 		$query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_signer SET weight=" . $weight . " WHERE id=" . $row['id'];
 		$db->query( $query );
 	}
-	
+
 	$query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_signer SET weight=" . $cWeight . " WHERE id=" . $id;
 	$db->query( $query );
 	nv_del_moduleCache( $module_name );
@@ -76,8 +76,8 @@ $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'GLANG', $lang_global );
 $xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
 $xtpl->assign( 'MODULE_URL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE );
-$xtpl->assign( 'UPLOADS_DIR_USER', NV_UPLOADS_DIR . '/' . $module_name );
-$xtpl->assign( 'UPLOAD_CURRENT', NV_UPLOADS_DIR . '/' . $module_name );
+$xtpl->assign( 'UPLOADS_DIR_USER', NV_UPLOADS_DIR . '/' . $module_upload );
+$xtpl->assign( 'UPLOAD_CURRENT', NV_UPLOADS_DIR . '/' . $module_upload );
 
 if( $nv_Request->isset_request( 'add', 'get' ) or $nv_Request->isset_request( 'edit, id', 'get' ) )
 {
@@ -113,8 +113,8 @@ if( $nv_Request->isset_request( 'add', 'get' ) or $nv_Request->isset_request( 'e
 
 		if( isset( $post['id'] ) )
 		{
-			$query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_signer SET 
-                    positions=" . $db->quote( $post['positions'] ) . ", 
+			$query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_signer SET
+                    positions=" . $db->quote( $post['positions'] ) . ",
                     name=" . $db->quote( $post['name'] ) . " WHERE id=" . $post['id'];
 			$db->query( $query );
 		}
