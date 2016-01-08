@@ -15,14 +15,14 @@ if( !nv_function_exists( 'nv_type_blocks' ) )
 {
 	function nv_block_config_type_blocks( $module, $data_block, $lang_block )
 	{
-		global $db, $language_array, $module_array_cat, $module_file, $site_mods;
+		global $db, $language_array, $module_array_cat, $module_file, $site_mods, $nv_Cache;
 
 		$html = "";
 		$html .= "<tr>";
 		$html .= "	<td>" . $lang_block['catid'] . "</td>";
 		$html .= "	<td><select name=\"config_type\" class=\"form-control w200\">\n";
 		$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $site_mods[$module]['module_data'] . "_type WHERE parentid = 0 ORDER BY weight ASC";
-		$list = nv_db_cache( $sql, 'id', $module );
+		$list = $nv_Cache->db( $sql, 'id', $module );
 		foreach( $list as $l )
 		{
 			$xtitle_i = "";

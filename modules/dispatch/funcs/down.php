@@ -147,7 +147,7 @@ if ( $is_zip )
     }
 }
 
-$download = new download( $file_src, $directory, $file_basename, $is_resume, $max_speed );
+$download = new NukeViet\Files\Download( $file_src, $directory, $file_basename, $is_resume, $max_speed );
 if ( $is_zip )
 {
     $mtime = ( $mtime = filemtime( $session_files['fileupload'][$file]['src'] ) ) > 0 ? $mtime : time();

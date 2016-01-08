@@ -46,7 +46,7 @@ if( $nv_Request->isset_request( 'cWeight, id', 'post' ) )
 
 	$query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_signer SET weight=" . $cWeight . " WHERE id=" . $id;
 	$db->query( $query );
-	nv_del_moduleCache( $module_name );
+	$nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, $lang_module['logChangeWeight'], "Id: " . $id, $admin_info['userid'] );
 	die( 'OK' );
 }
@@ -66,7 +66,7 @@ if( $nv_Request->isset_request( 'del', 'post' ) )
 	$query = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_signer WHERE id = " . $id;
 	$db->query( $query );
 	fix_signerWeight( );
-	nv_del_moduleCache( $module_name );
+	$nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, $lang_module['logDelsigner'], "Id: " . $id, $admin_info['userid'] );
 	die( 'OK' );
 }
@@ -128,7 +128,7 @@ if( $nv_Request->isset_request( 'add', 'get' ) or $nv_Request->isset_request( 'e
 
 		}
 
-		nv_del_moduleCache( $module_name );
+		$nv_Cache->delMod( $module_name );
 		nv_insert_logs( NV_LANG_DATA, $module_name, $log_title, "Id: " . $post['id'], $admin_info['userid'] );
 		die( 'OK' );
 	}

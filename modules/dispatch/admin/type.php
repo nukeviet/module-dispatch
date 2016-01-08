@@ -134,7 +134,7 @@ if ( $nv_Request->isset_request( 'add', 'get' ) )
             else
             {
             	nv_insert_logs( NV_LANG_DATA, $module_name, $lang_module['type_add'] ,$array['title'], $admin_info['userid'] );
-                nv_del_moduleCache( $module_name );
+                $nv_Cache->delMod( $module_name );
                 Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type" );
                 exit();
             }
@@ -290,7 +290,7 @@ if ( $nv_Request->isset_request( 'edit', 'get' ) )
                     nv_FixWeighttype( $row['parentid'] );
                 }
                 
-                nv_del_moduleCache( $module_name );
+                $nv_Cache->delMod( $module_name );
                 nv_insert_logs( NV_LANG_DATA, $module_name, $lang_module['type_edit'] ,$array['title'], $admin_info['userid'] );
                 Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type" );
                 exit();
@@ -363,7 +363,7 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
     
     nv_del_type( $typeid );
     nv_FixWeighttype( $parentid );
-    nv_del_moduleCache( $module_name );
+    $nv_Cache->delMod( $module_name );
     
     die( 'OK' );
 }
@@ -396,7 +396,7 @@ if ( $nv_Request->isset_request( 'changeweight', 'post' ) )
     $sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_type` SET `weight`=" . $new . " WHERE `id`=" . $typeid;
     $db->query( $sql );
     
-    nv_del_moduleCache( $module_name );
+    $nv_Cache->delMod( $module_name );
     
     die( 'OK' );
 }
@@ -421,7 +421,7 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
     $sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_type` SET `status`=" . $status . " WHERE `id`=" . $typeid;
     $db->query( $sql );
     
-    nv_del_moduleCache( $module_name );
+    $nv_Cache->delMod( $module_name );
     
     die( 'OK' );
 }
