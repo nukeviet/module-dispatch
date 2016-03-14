@@ -110,6 +110,10 @@ function nv_theme_congvan_main ( $error, $array, $page_title, $base_url, $all_pa
 
          $xtpl->parse( 'main.timkiem');
         }
+		else {
+			 $xtpl->parse( 'main.btn_timkiem');
+		}
+		
         if ( ! empty( $array ) )
         {
         	if ( $page_title != '' )

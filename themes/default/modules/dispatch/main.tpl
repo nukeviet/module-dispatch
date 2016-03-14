@@ -4,7 +4,9 @@
 <link type="text/css" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/ui/jquery.ui.menu.css" rel="stylesheet" />
 <link type="text/css" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/ui/jquery.ui.datepicker.css" rel="stylesheet" />
 
+<!-- BEGIN: btn_timkiem -->
 <a class="btn btn-primary" href="{SE_LINK}">{LANG.sereach}</a>
+<!-- END: btn_timkiem -->
 
 <script type="text/javascript">var pro_del_cofirm = "{LANG.product_del_cofirm}";</script>
 
@@ -53,7 +55,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2"><input class="btn btn-primary" type="submit" value="Search" name="timkiem"></td>
+				<td colspan="2" class="text-center"><input class="btn btn-primary" type="submit" value="Search" name="timkiem"></td>
 			</tr>
 
 		</table>
