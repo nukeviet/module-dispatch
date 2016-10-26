@@ -8,7 +8,8 @@
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
-if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
+if (!defined('NV_MAINFILE'))
+    die('Stop!!!');
 
 $lang_translator['author'] = "VINADES.,JSC (contact@vinades.vn)";
 $lang_translator['createdate'] = "19/07/2011, 09:07";
@@ -84,11 +85,11 @@ $lang_module['dis_dis'] = "Nội dung";
 $lang_module['dis_status'] = "Trạng thái";
 $lang_module['dis_person'] = "Người ký";
 $lang_module['dis_de'] = "Phòng ban nhận";
-$lang_module['dis_sta0']="Chưa xử lý";
-$lang_module['dis_sta1']="Đã xử lý";
-$lang_module['dis_sta2']="Để lưu";
-$lang_module['browse']="Chọn file";
-$lang_module['add_button']="Thêm file";
+$lang_module['dis_sta0'] = "Chưa xử lý";
+$lang_module['dis_sta1'] = "Đã xử lý";
+$lang_module['dis_sta2'] = "Để lưu";
+$lang_module['browse'] = "Chọn file";
+$lang_module['add_button'] = "Thêm file";
 $lang_module['dis_pe_re'] = "Người nhận";
 $lang_module['dis_pe_si'] = "Người ký nhận";
 $lang_module['product_list_by_cat'] = "Các công văn thuộc chủ đề &ldquo;<strong>%s</strong>&rdquo;";
@@ -102,23 +103,23 @@ $lang_module['error_iss'] = "Lỗi : Ngày ban hành không được để trố
 $lang_module['error_si'] = "Lỗi : Người ký không được để trống";
 $lang_module['error_first'] = "Lỗi : Ngày có hiệu lực không được để trống";
 $lang_module['error_per'] = "Lỗi : Người nhận và người ký nhận không được để trống";
-$lang_module['error_insert'] ="Lỗi: Vì một lý do nào đó mà dữ liệu không thể lưu lại được ";
-$lang_module['error_update'] ="Lỗi: Vì một lý do nào đó mà dữ liệu không thể update được ";
+$lang_module['error_insert'] = "Lỗi: Vì một lý do nào đó mà dữ liệu không thể lưu lại được ";
+$lang_module['error_update'] = "Lỗi: Vì một lý do nào đó mà dữ liệu không thể update được ";
 
-$lang_module['add_dis_go']= " Nhập công văn đi";
-$lang_module['dis_to_org']= " Đơn vị nhận";
-$lang_module['org']= ' Các tổ chức cơ quan cách nhau bởi dấu <span style= "color: #f00;">","</span>';
+$lang_module['add_dis_go'] = " Nhập công văn đi";
+$lang_module['dis_to_org'] = " Đơn vị nhận";
+$lang_module['org'] = ' Các tổ chức cơ quan cách nhau bởi dấu <span style= "color: #f00;">","</span>';
 $lang_module['error_org'] = "Lỗi : Đơn vị nhận không được để trống";
 
-$lang_module['add_dis_inter']= " Nhập công văn nội bộ";
-$lang_module['from_depid']= "Tên phòng gửi";
+$lang_module['add_dis_inter'] = " Nhập công văn nội bộ";
+$lang_module['from_depid'] = "Tên phòng gửi";
 
-$lang_module['stt']= "STT";
-$lang_module['dis_from']= "Nơi gửi";
-$lang_module['detail']= "Xem chi tiết";
-$lang_module['iss']= "Hiệu lực";
-$lang_module['table'] ="Danh sách công văn";
-$lang_module['dis'] ="Loại công văn";
+$lang_module['stt'] = "STT";
+$lang_module['dis_from'] = "Nơi gửi";
+$lang_module['detail'] = "Xem chi tiết";
+$lang_module['iss'] = "Hiệu lực";
+$lang_module['table'] = "Danh sách công văn";
+$lang_module['dis'] = "Loại công văn";
 $lang_module['feature'] = "Chức năng";
 $lang_module['year'] = "Năm";
 $lang_module['timkiem'] = "Tìm kiếm";
