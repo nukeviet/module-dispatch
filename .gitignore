@@ -36,3 +36,6 @@
 !/themes/default/modules/dispatch
 !/themes/default/modules/dispatch/*
 /.project
+/vendor
+/.gitattributes
+/composer.json

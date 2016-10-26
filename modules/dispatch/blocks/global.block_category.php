@@ -12,6 +12,14 @@ if (!defined('NV_MAINFILE'))
     die('Stop!!!');
 
 if (!nv_function_exists('nv_dispathch_category')) {
+    /**
+     * nv_block_config_dispathch_category()
+     * 
+     * @param mixed $module
+     * @param mixed $data_block
+     * @param mixed $lang_block
+     * @return
+     */
     function nv_block_config_dispathch_category($module, $data_block, $lang_block)
     {
         global $db, $language_array;
@@ -26,6 +34,13 @@ if (!nv_function_exists('nv_dispathch_category')) {
         return '<tr><td>' . $lang_block['title_length'] . '</td><td>' . $html . '</td></tr>';
     }
 
+    /**
+     * nv_block_config_dispathch_category_submit()
+     * 
+     * @param mixed $module
+     * @param mixed $lang_block
+     * @return
+     */
     function nv_block_config_dispathch_category_submit($module, $lang_block)
     {
         global $nv_Request;
@@ -36,13 +51,31 @@ if (!nv_function_exists('nv_dispathch_category')) {
         return $return;
     }
 
+    /**
+     * nv_dispathch_category()
+     * 
+     * @param mixed $block_config
+     * @return
+     */
     function nv_dispathch_category($block_config)
     {
-        global $module_array_cat, $module_info, $lang_module;
+        global $module_array_cat, $module_info, $lang_module, $site_mods, $global_config;
 
-        $xtpl = new XTemplate("block_category.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/dispatch");
+        $module = $block_config['module'];
+        $module_file = $site_mods[$module]['module_file'];
+
+        if (file_exists(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file . '/block_category.tpl')) {
+            $block_theme = $module_info['template'];
+        } elseif (file_exists(NV_ROOTDIR . '/themes/' . $global_config['site_theme'] . '/modules/' . $module_file . '/block_category.tpl')) {
+            $block_theme = $global_config['site_theme'];
+        } else {
+            $block_theme = 'default';
+        }
+
+        $xtpl = new XTemplate("block_category.tpl", NV_ROOTDIR . "/themes/" . $block_theme . "/modules/" . $module_file);
         $xtpl->assign('LANG', $lang_module);
         $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
+        $xtpl->assign('TEMPLATE', $block_theme);
 
         $arr = array();
 
@@ -71,6 +104,13 @@ if (!nv_function_exists('nv_dispathch_category')) {
         }
     }
 
+    /**
+     * nv_dispathch_sub_category()
+     * 
+     * @param mixed $list_sub
+     * @param mixed $title_length
+     * @return
+     */
     function nv_dispathch_sub_category($list_sub, $title_length)
     {
         global $module_array_cat;

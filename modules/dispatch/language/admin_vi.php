@@ -19,7 +19,7 @@ $lang_translator['langtype'] = "lang_module";
 
 $lang_module['main'] = "Trang chính";
 $lang_module['config'] = "Cấu hình";
-$lang_module['save'] = "Save";
+$lang_module['save'] = "Lưu lại";
 
 $lang_module['alias'] = "Liên kết tĩnh";
 $lang_module['introduction'] = "Giới thiệu";
