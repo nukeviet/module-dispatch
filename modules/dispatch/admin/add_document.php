@@ -8,8 +8,7 @@
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
-if (!defined('NV_IS_FILE_ADMIN'))
-    die('Stop!!!');
+if (!defined('NV_IS_FILE_ADMIN')) die('Stop!!!');
 
 $array['parentid'] = $catid = $array['type'] = $array['from_signer'] = $array['from_depid'] = 0;
 $arr_de['parentid'] = $array['statusid'] = $deid = $id = 0;
@@ -29,9 +28,9 @@ if ($num > 0) {
     $array['parentid'] = $array['catid'];
     $array['statusid'] = $array['status'];
     $arr_imgs = explode(',', $array['file']);
-
+    
     $sql1 = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_de_do WHERE doid=" . $id;
-
+    
     $result1 = $db->query($sql1);
     $nu = $result1->rowCount();
     if ($nu > 0) {
@@ -43,12 +42,12 @@ if ($num > 0) {
 
 if ($nv_Request->isset_request('submit', 'post')) {
     $id = $nv_Request->get_int('id', 'post', 0);
-
+    
     $gr = array();
-
+    
     $_groups_view = $nv_Request->get_array('groups_view', 'post', array());
     $array['groups_view'] = !empty($_groups_view) ? implode(',', nv_groups_post(array_intersect($_groups_view, array_keys($groups_list)))) : '';
-
+    
     $array['parentid'] = $nv_Request->get_int('parentid', 'post', 0);
     $array['type'] = $nv_Request->get_int('typeid', 'post', 0);
     $array['from_depid'] = $nv_Request->get_int('from_depid', 'post', 0);
@@ -62,7 +61,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array['statusid'] = $nv_Request->get_int('statusid', 'post', 0);
     $arr_img = $nv_Request->get_typed_array('fileupload', 'post', 'string');
     $array['from_time'] = $nv_Request->get_title('from_time', 'post', '', '');
-
+    
     if (!empty($array['from_time'])) {
         unset($m);
         if (preg_match("/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/", $array['from_time'], $m)) {
@@ -73,9 +72,9 @@ if ($nv_Request->isset_request('submit', 'post')) {
     } else {
         $array['from_time'] = '';
     }
-
+    
     $array['date_iss'] = $nv_Request->get_title('date_iss', 'post', '', 1);
-
+    
     if (!empty($array['date_iss'])) {
         unset($m);
         if (preg_match("/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/", $array['date_iss'], $m)) {
@@ -86,9 +85,9 @@ if ($nv_Request->isset_request('submit', 'post')) {
     } else {
         $array['date_iss'] = '';
     }
-
+    
     $array['date_first'] = $nv_Request->get_title('date_first', 'post', '', 1);
-
+    
     if (!empty($array['date_first'])) {
         unset($m);
         if (preg_match("/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/", $array['date_first'], $m)) {
@@ -99,9 +98,9 @@ if ($nv_Request->isset_request('submit', 'post')) {
     } else {
         $array['date_first'] = '';
     }
-
+    
     $array['date_die'] = $nv_Request->get_title('date_die', 'post', '', 1);
-
+    
     if (!empty($array['date_die'])) {
         unset($m);
         if (preg_match("/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/", $array['date_die'], $m)) {
@@ -112,51 +111,42 @@ if ($nv_Request->isset_request('submit', 'post')) {
     } else {
         $array['date_die'] = 0;
     }
-
+    
     $cut = strlen(NV_BASE_SITEURL . "uploads/" . $module_name . "/");
-
+    
     foreach ($arr_img as $arr) {
         $arr_imgs[] = substr($arr, $cut, strlen($arr));
     }
     $array['file'] = (!empty($arr_imgs)) ? implode(",", $arr_imgs) : "";
-
+    
     $listde = $nv_Request->get_typed_array('deid', 'post', 'int');
-
+    
     if ($error == '') {
-
+        
         if ($array['title'] == "") {
             $error = $lang_module['error_title'];
-        } else
-            if ($array['code'] == '') {
-                $error = $lang_module['error_code'];
-            } else
-                if ($array['from_time'] == '') {
-                    $error = $lang_module['error_from_time'];
-                } else
-                    if ($array['from_signer'] == '') {
-                        $error = $lang_module['error_si'];
-                    } else
-                        if ($array['date_iss'] == '') {
-                            $error = $lang_module['error_iss'];
-                        } else
-                            if ($array['date_first'] == '') {
-                                $error = $lang_module['error_first'];
-                            } else
-                                if ($array['from_org'] == '') {
-                                    $error = $lang_module['error_souce'];
-                                } else
-                                    if ($array['date_iss'] > $array['date_first']) {
-                                        $error = $lang_module['error_iss_first'];
-                                    } else
-                                        if ($array['from_time'] > $array['date_iss']) {
-                                            $error = $lang_module['error_iss_time'];
-
-                                        } else
-                                            if ($array['date_die'] != 0 && ($array['date_die'] < $array['date_first'])) {
-                                                $error = $lang_module['error_die_first'];
-                                            } else {
-                                                if ($id != 0) {
-                                                    $sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET
+        } else if ($array['code'] == '') {
+            $error = $lang_module['error_code'];
+        } else if ($array['from_time'] == '') {
+            $error = $lang_module['error_from_time'];
+        } else if ($array['from_signer'] == '') {
+            $error = $lang_module['error_si'];
+        } else if ($array['date_iss'] == '') {
+            $error = $lang_module['error_iss'];
+        } else if ($array['date_first'] == '') {
+            $error = $lang_module['error_first'];
+        } else if ($array['from_org'] == '') {
+            $error = $lang_module['error_souce'];
+        } else if ($array['date_iss'] > $array['date_first']) {
+            $error = $lang_module['error_iss_first'];
+        } else if ($array['from_time'] > $array['date_iss']) {
+            $error = $lang_module['error_iss_time'];
+        
+        } else if ($array['date_die'] != 0 && ($array['date_die'] < $array['date_first'])) {
+            $error = $lang_module['error_die_first'];
+        } else {
+            if ($id != 0) {
+                $sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET
                     catid = " . $array['parentid'] . ",
                     type = " . $array['type'] . ",
                     title = " . $db->quote($array['title']) . ",
@@ -174,34 +164,34 @@ if ($nv_Request->isset_request('submit', 'post')) {
 					date_die = " . $array['date_die'] . ",
 					groups_view = " . $array['groups_view'] . ",
 					status = " . $array['statusid'] . " WHERE id = " . $id;
-
-                                                    if ($db->query($sql)) {
-                                                        $db->query("DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_de_do WHERE doid =" . $id);
-                                                        $query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET
+                
+                if ($db->query($sql)) {
+                    $db->query("DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_de_do WHERE doid =" . $id);
+                    $query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET
                 		alias=" . $db->quote($array['alias'] . "-" . $id) . " WHERE id=" . $id;
-                                                        $db->query($query);
-
-                                                        if (!empty($listde)) {
-                                                            foreach ($listde as $k) {
-
-                                                                $sql1 = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_de_do VALUES (
+                    $db->query($query);
+                    
+                    if (!empty($listde)) {
+                        foreach ($listde as $k) {
+                            
+                            $sql1 = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_de_do VALUES (
 								NULL,
 								" . $id . ",
 								" . $k . "
 								)";
-
-                                                                $db->query($sql1);
-                                                            }
-                                                        }
-
-                                                        Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main");
-                                                        exit();
-
-                                                    } else {
-                                                        $error = $lang_module['error_update'];
-                                                    }
-                                                } else {
-                                                    $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_document VALUES (
+                            
+                            $db->query($sql1);
+                        }
+                    }
+                    
+                    Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main");
+                    exit();
+                
+                } else {
+                    $error = $lang_module['error_update'];
+                }
+            } else {
+                $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_document VALUES (
 					NULL,
 					" . $array['type'] . ",
 					" . $array['parentid'] . ",'',
@@ -218,42 +208,43 @@ if ($nv_Request->isset_request('submit', 'post')) {
 					" . $db->quote($array['to_org']) . ",
 					" . $db->quote($array['groups_view']) . ",
 					" . $array['statusid'] . ", 0 )";
-
-                                                    $array['id'] = $db->insert_id($sql);
-
-                                                    if ($array['id'] > 0) {
-                                                        $query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET
+                
+                $array['id'] = $db->insert_id($sql);
+                
+                if ($array['id'] > 0) {
+                    $query = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_document SET
                 	alias=" . $db->quote($array['alias'] . "-" . $array['id']) . " WHERE id=" . $array['id'];
-                                                        $db->query($query);
-                                                        if (!empty($listde)) {
-                                                            foreach ($listde as $k) {
-
-                                                                $sql1 = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_de_do VALUES (
+                    $db->query($query);
+                    if (!empty($listde)) {
+                        foreach ($listde as $k) {
+                            
+                            $sql1 = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_de_do VALUES (
 							NULL,
 							" . $array['id'] . ",
 							" . $k . "
 
 							)";
-
-                                                                $db->query($sql1);
-                                                            }
-                                                        }
-
-                                                        Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main");
-                                                        exit();
-
-                                                    } else {
-                                                        $error = $lang_module['error_insert'];
-                                                    }
-                                                }
-                                            }
+                            
+                            $db->query($sql1);
+                        }
+                    }
+                    
+                    Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main");
+                    exit();
+                
+                } else {
+                    $error = $lang_module['error_insert'];
+                }
+            }
+        }
     }
 }
 
 $fileupload_num = count($arr_img);
 $listcats = nv_listcats($array['parentid'], 0);
 $listtypes = nv_listtypes($array['type'], 0);
-$listdes = array(array(
+$listdes = array(
+    array(
         'id' => 0,
         'parentid' => 0,
         'alias' => '',
@@ -272,9 +263,9 @@ $array['date_die'] = $array['date_die'] ? nv_date('d/m/Y', $array['date_die']) :
 foreach ($listdes as $li) {
     if ($li['id'] != 0) {
         $lis[] = array(
-            'id' => (int)$li['id'], //
-            'alias' => $li['alias'], //
-            'name' => $li['title'], //
+            'id' => (int) $li['id'],
+            'alias' => $li['alias'],
+            'name' => $li['title'],
             'checked' => in_array($li['id'], $listde) ? 'checked="checked"' : ''
         );
     }
@@ -282,9 +273,9 @@ foreach ($listdes as $li) {
 
 foreach ($arr_status as $a) {
     $as[] = array(
-        'id' => $a['id'], //
-        'name' => $a['name'], //
-        'selected' => $a['id'] == $array['statusid'] ? " selected=\"selected\"" : "" //
+        'id' => $a['id'],
+        'name' => $a['name'],
+        'selected' => $a['id'] == $array['statusid'] ? " selected=\"selected\"" : ""
     );
 }
 
@@ -351,8 +342,8 @@ foreach ($groups_list as $_group_id => $_title) {
     $xtpl->assign('groups_view', array(
         'value' => $_group_id,
         'checked' => in_array($_group_id, $groups_view) ? ' checked="checked"' : '',
-        'title' => $_title)
-    );
+        'title' => $_title
+    ));
     $xtpl->parse('inter.groups_view');
 }
 
@@ -366,9 +357,12 @@ if (!empty($arr_imgs)) {
     $str = NV_BASE_SITEURL . "uploads/" . $module_name . "/";
     if ($arr_imgs[0] != '') {
         foreach ($arr_imgs as $file) {
-
+            
             if (file_exists(NV_UPLOADS_REAL_DIR . "/" . $module_upload . "/" . $file)) {
-                $xtpl->assign('FILEUPLOAD', array('value' => $str . $file, 'key' => $a));
+                $xtpl->assign('FILEUPLOAD', array(
+                    'value' => $str . $file,
+                    'key' => $a
+                ));
                 $xtpl->parse('inter.fileupload');
                 $a++;
             }
@@ -381,7 +375,7 @@ if (!empty($arr_imgs)) {
 }
 
 if ($error != '') {
-
+    
     $xtpl->assign('ERROR', $error);
     $xtpl->parse('inter.error');
 }

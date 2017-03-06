@@ -8,14 +8,14 @@
  * @Createdate 3/9/2010 23:25
  */
 
-if (!defined('NV_MAINFILE'))
-    die('Stop!!!');
+if (!defined('NV_MAINFILE')) die('Stop!!!');
 
 if (!nv_function_exists('nv_type_blocks')) {
+
     function nv_block_config_type_blocks($module, $data_block, $lang_block)
     {
         global $db, $language_array, $module_array_cat, $module_file, $site_mods, $nv_Cache;
-
+        
         $html = "";
         $html .= "<tr>";
         $html .= "	<td>" . $lang_block['catid'] . "</td>";
@@ -55,9 +55,9 @@ if (!nv_function_exists('nv_type_blocks')) {
     function nv_type_blocks($block_config)
     {
         global $module_data, $module_name, $module_file, $global_array_cat, $lang_module, $my_head, $db, $module_info, $site_mods;
-
+        
         $module = $block_config['module'];
-
+        
         $xtpl = new XTemplate("block_hits.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $site_mods[$module]['module_file']);
         $xtpl->assign('BASESITE', NV_BASE_SITEURL);
         $xtpl->assign('LANG', $lang_module);
@@ -69,27 +69,27 @@ if (!nv_function_exists('nv_type_blocks')) {
         while ($row = $re->fetch()) {
             $a_t1[] = $row['id'];
         }
-
+        
         $query = "SELECT id FROM " . NV_PREFIXLANG . "_" . $site_mods[$module]['module_data'] . "_type WHERE id=" . $block_config['type'] . " OR parentid IN (" . implode(',', $a_t1) . ")";
         $re = $db->query($query);
         while ($row = $re->fetch()) {
             $a_t[] = $row['id'];
         }
-
+        
         $sql = "SELECT id, alias, title,from_time, code, groups_view,file FROM " . NV_PREFIXLANG . "_" . $site_mods[$module]['module_data'] . "_document WHERE type IN (" . implode(',', $a_t) . ") ORDER BY date_iss DESC, id DESC LIMIT 0 ," . $block_config['numrow'];
         $result = $db->query($sql);
         $chk_topview = $result->rowCount();
-
+        
         if ($chk_topview) {
             while ($row = $result->fetch()) {
                 if (nv_user_in_groups($row['groups_view'])) {
                     $row['link'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module . "&amp;" . NV_OP_VARIABLE . "=detail/" . $row['alias'];
-
+                    
                     if (nv_date('d.m.Y', $row['from_time']) == nv_date('d.m.Y', NV_CURRENTTIME)) {
                         $row['title'] = $row['title'] . "<img src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/new.gif\">";
                     }
                     $fileupload = explode(",", $row['file']);
-
+                    
                     $i = 0;
                     foreach ($fileupload as $f) {
                         $i = $i + 1;
@@ -97,13 +97,13 @@ if (!nv_function_exists('nv_type_blocks')) {
                         $xtpl->assign('i', $i);
                         $xtpl->parse('main.topviews.loop.loop1');
                     }
-
+                    
                     $xtpl->assign('topviews', $row);
                     $xtpl->parse('main.topviews.loop');
                 }
             }
             $xtpl->parse('main.topviews');
-
+        
         }
         $xtpl->parse('main');
         return $xtpl->text('main');

@@ -8,20 +8,14 @@
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
-if (!defined('NV_MAINFILE'))
-    die('Stop!!!');
+if (!defined('NV_MAINFILE')) die('Stop!!!');
 
 $sql_drop_module = array();
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_departments";
-
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_cat";
-
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_type";
-
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_signer";
-
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_document";
-
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_de_do";
 
 $sql_create_module = $sql_drop_module;
@@ -104,6 +98,5 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
  doid mediumint(8) unsigned NOT NULL DEFAULT '0',
  deid mediumint(8) unsigned NOT NULL DEFAULT '0',
-
   PRIMARY KEY (id)
  ) ENGINE=MyISAM;";

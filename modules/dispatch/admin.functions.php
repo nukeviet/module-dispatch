@@ -8,8 +8,7 @@
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
-if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'))
-    die('Stop!!!');
+if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN')) die('Stop!!!');
 
 $submenu['add_document'] = $lang_module['add_document'];
 $submenu['cat'] = $lang_module['cat'];
@@ -27,9 +26,18 @@ $allow_func = array(
 );
 global $arr_status;
 $arr_status = array(
-    '0' => array('id' => '0', 'name' => $lang_module['dis_sta0']),
-    '1' => array('id' => '1', 'name' => $lang_module['dis_sta1']),
-    '2' => array('id' => '2', 'name' => $lang_module['dis_sta2'])
+    '0' => array(
+        'id' => '0',
+        'name' => $lang_module['dis_sta0']
+    ),
+    '1' => array(
+        'id' => '1',
+        'name' => $lang_module['dis_sta1']
+    ),
+    '2' => array(
+        'id' => '2',
+        'name' => $lang_module['dis_sta2']
+    )
 );
 
 define('NV_IS_FILE_ADMIN', true);
@@ -51,7 +59,7 @@ function nv_setcats1($list2, $id, $list, $m = 0, $num = 0)
     for ($i = 0; $i < $num; $i++) {
         $defis .= "--";
     }
-
+    
     if (isset($list[$id])) {
         foreach ($list[$id] as $value) {
             if ($value['id'] != $m) {
@@ -76,30 +84,30 @@ function nv_setcats1($list2, $id, $list, $m = 0, $num = 0)
 function nv_listcats($parentid, $m = 0)
 {
     global $db, $module_data;
-
+    
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_cat` ORDER BY `parentid`,`weight` ASC";
-
+    
     $result = $db->query($sql);
     $list = array();
     while ($row = $result->fetch()) {
-        $list[$row['parentid']][] = array( //
-            'id' => (int)$row['id'], //
-            'parentid' => (int)$row['parentid'], //
-            'title' => $row['title'], //
-            'alias' => $row['alias'], //
-            'introduction' => $row['introduction'], //
-            'weight' => (int)$row['weight'], //
-            'status' => $row['status'], //
-            'name' => $row['title'], //
-            'addtime' => $row['addtime'], //
-            'selected' => $parentid == $row['id'] ? " selected=\"selected\"" : "" //
+        $list[$row['parentid']][] = array(
+            'id' => (int) $row['id'],
+            'parentid' => (int) $row['parentid'],
+            'title' => $row['title'],
+            'alias' => $row['alias'],
+            'introduction' => $row['introduction'],
+            'weight' => (int) $row['weight'],
+            'status' => $row['status'],
+            'name' => $row['title'],
+            'addtime' => $row['addtime'],
+            'selected' => $parentid == $row['id'] ? " selected=\"selected\"" : ""
         );
     }
-
+    
     if (empty($list)) {
         return $list;
     }
-
+    
     $list2 = array();
     foreach ($list[0] as $value) {
         if ($value['id'] != $m) {
@@ -109,7 +117,7 @@ function nv_listcats($parentid, $m = 0)
             }
         }
     }
-
+    
     return $list2;
 }
 
@@ -130,7 +138,7 @@ function nv_settypes1($list2, $id, $list, $m = 0, $num = 0)
     for ($i = 0; $i < $num; $i++) {
         $defis .= "--";
     }
-
+    
     if (isset($list[$id])) {
         foreach ($list[$id] as $value) {
             if ($value['id'] != $m) {
@@ -155,28 +163,28 @@ function nv_settypes1($list2, $id, $list, $m = 0, $num = 0)
 function nv_listtypes($parentid, $m = 0)
 {
     global $db, $module_data;
-
+    
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_type` ORDER BY `parentid`,`weight` ASC";
-
+    
     $result = $db->query($sql);
     $list = array();
     while ($row = $result->fetch()) {
-        $list[$row['parentid']][] = array( //
-            'id' => (int)$row['id'], //
-            'parentid' => (int)$row['parentid'], //
-            'title' => $row['title'], //
-            'alias' => $row['alias'], //
-            'weight' => (int)$row['weight'], //
-            'status' => $row['status'], //
-            'name' => $row['title'], //
-            'selected' => $parentid == $row['id'] ? " selected=\"selected\"" : "" //
+        $list[$row['parentid']][] = array(
+            'id' => (int) $row['id'],
+            'parentid' => (int) $row['parentid'],
+            'title' => $row['title'],
+            'alias' => $row['alias'],
+            'weight' => (int) $row['weight'],
+            'status' => $row['status'],
+            'name' => $row['title'],
+            'selected' => $parentid == $row['id'] ? " selected=\"selected\"" : ""
         );
     }
-
+    
     if (empty($list)) {
         return $list;
     }
-
+    
     $list2 = array();
     foreach ($list[0] as $value) {
         if ($value['id'] != $m) {
@@ -186,7 +194,7 @@ function nv_listtypes($parentid, $m = 0)
             }
         }
     }
-
+    
     return $list2;
 }
 
@@ -207,9 +215,9 @@ function nv_setdes1($list2, $id, $list, $m = 0, $num = 0)
     $des = "";
     for ($i = 0; $i < $num; $i++) {
         $defis .= "--";
-
+    
     }
-
+    
     if (isset($list[$id])) {
         foreach ($list[$id] as $value) {
             if ($value['id'] != $m) {
@@ -234,31 +242,31 @@ function nv_setdes1($list2, $id, $list, $m = 0, $num = 0)
 function nv_listdes($parentid, $m = 0)
 {
     global $db, $module_data;
-
+    
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_departments` ORDER BY `parentid`,`weight` ASC";
-
+    
     $result = $db->query($sql);
     $list = array();
     while ($row = $result->fetch()) {
-        $list[$row['parentid']][] = array( //
-            'id' => (int)$row['id'], //
-            'parentid' => (int)$row['parentid'], //
-            'title' => $row['title'], //
-            'alias' => $row['alias'], //
-            'introduction' => $row['introduction'], //
-            'weight' => (int)$row['weight'], //
-            'head' => $row['head'], //
-            'name' => $row['title'], //
-            'addtime' => $row['addtime'], //
-            'selected' => $parentid == $row['id'] ? " selected=\"selected\"" : "", //
-            'checked' => $parentid == $row['id'] ? " checked=\"checked\"" : "" //
+        $list[$row['parentid']][] = array(
+            'id' => (int) $row['id'],
+            'parentid' => (int) $row['parentid'],
+            'title' => $row['title'],
+            'alias' => $row['alias'],
+            'introduction' => $row['introduction'],
+            'weight' => (int) $row['weight'],
+            'head' => $row['head'],
+            'name' => $row['title'],
+            'addtime' => $row['addtime'],
+            'selected' => $parentid == $row['id'] ? " selected=\"selected\"" : "",
+            'checked' => $parentid == $row['id'] ? " checked=\"checked\"" : ""
         );
     }
-
+    
     if (empty($list)) {
         return $list;
     }
-
+    
     $list2 = array();
     foreach ($list[0] as $value) {
         if ($value['id'] != $m) {
@@ -268,34 +276,34 @@ function nv_listdes($parentid, $m = 0)
             }
         }
     }
-
+    
     return $list2;
 }
 
 function nv_signerList($idsigner)
 {
     global $db, $module_data;
-
+    
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_signer` ORDER BY `weight` ASC";
     $result = $db->query($sql);
     $list = array();
     while ($row = $result->fetch()) {
-        $list[$row['id']] = array( //
+        $list[$row['id']] = array(
             'id' => $row['id'],
-            'name' => $row['name'], //
-            'positions' => $row['positions'], //
-            'weight' => (int)$row['weight'], //
-            'selected' => $idsigner == $row['id'] ? " selected=\"selected\"" : "", //
+            'name' => $row['name'],
+            'positions' => $row['positions'],
+            'weight' => (int) $row['weight'],
+            'selected' => $idsigner == $row['id'] ? " selected=\"selected\"" : ""
         );
     }
-
+    
     return $list;
 }
 
 function fix_signerWeight()
 {
     global $db, $module_data;
-
+    
     $sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_signer` ORDER BY `weight` ASC";
     $result = $db->query($sql);
     $weight = 0;

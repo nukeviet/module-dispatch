@@ -8,22 +8,22 @@
  * @Createdate 3/9/2010 23:25
  */
 
-if (!defined('NV_IS_MOD_CONGVAN'))
-    die('Stop!!!');
+if (!defined('NV_IS_MOD_CONGVAN')) die('Stop!!!');
 
 if (!nv_function_exists('nv_dispathch_view')) {
+
     function nv_dispathch_view($block_config)
     {
         global $module_data, $module_name, $module_file, $global_array_cat, $lang_module, $my_head, $db, $module_info;
-
+        
         $xtpl = new XTemplate("block_hits.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file);
         $xtpl->assign('BASESITE', NV_BASE_SITEURL);
         $xtpl->assign('LANG', $lang_module);
-
+        
         $sql = "SELECT id, alias, title, code FROM " . NV_PREFIXLANG . "_" . $module_data . "_document  ORDER BY view DESC, id DESC LIMIT 0 , 10";
         $result = $db->query($sql);
         $chk_topview = $result->rowCount();
-
+        
         if ($chk_topview) {
             $i = 1;
             while ($row = $result->fetch()) {
@@ -33,7 +33,7 @@ if (!nv_function_exists('nv_dispathch_view')) {
             }
             $xtpl->parse('main.topviews');
         }
-
+        
         $xtpl->parse('main');
         return $xtpl->text('main');
     }
