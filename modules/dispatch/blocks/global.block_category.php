@@ -14,7 +14,7 @@ if (!nv_function_exists('nv_dispathch_category')) {
 
     /**
      * nv_block_config_dispathch_category()
-     * 
+     *
      * @param mixed $module
      * @param mixed $data_block
      * @param mixed $lang_block
@@ -27,7 +27,7 @@ if (!nv_function_exists('nv_dispathch_category')) {
         $html .= "<option value=\"\">" . $lang_block['title_length'] . "</option>\n";
         for ($i = 0; $i < 100; $i++) {
             $sel = ($data_block['title_length'] == $i) ? ' selected' : '';
-            
+
             $html .= "<option value=\"" . $i . "\" " . $sel . ">" . $i . "</option>\n";
         }
         $html .= "</select></td>\n";
@@ -36,7 +36,7 @@ if (!nv_function_exists('nv_dispathch_category')) {
 
     /**
      * nv_block_config_dispathch_category_submit()
-     * 
+     *
      * @param mixed $module
      * @param mixed $lang_block
      * @return
@@ -53,17 +53,17 @@ if (!nv_function_exists('nv_dispathch_category')) {
 
     /**
      * nv_dispathch_category()
-     * 
+     *
      * @param mixed $block_config
      * @return
      */
     function nv_dispathch_category($block_config)
     {
         global $module_array_cat, $module_info, $lang_module, $site_mods, $global_config;
-        
+
         $module = $block_config['module'];
         $module_file = $site_mods[$module]['module_file'];
-        
+
         if (file_exists(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file . '/block_category.tpl')) {
             $block_theme = $module_info['template'];
         } elseif (file_exists(NV_ROOTDIR . '/themes/' . $global_config['site_theme'] . '/modules/' . $module_file . '/block_category.tpl')) {
@@ -71,32 +71,32 @@ if (!nv_function_exists('nv_dispathch_category')) {
         } else {
             $block_theme = 'default';
         }
-        
-        $xtpl = new XTemplate("block_category.tpl", NV_ROOTDIR . "/themes/" . $block_theme . "/modules/" . $module_file);
+
+        $xtpl = new XTemplate("block_category.tpl", NV_ROOTDIR . "/themes/" . $block_theme . "/modules/" . $module_info['module_theme']);
         $xtpl->assign('LANG', $lang_module);
         $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
         $xtpl->assign('TEMPLATE', $block_theme);
-        
+
         $arr = array();
-        
+
         if (!empty($module_array_cat)) {
             $title_length = $block_config['title_length'];
             $xtpl->assign('LANG', $lang_module);
             $xtpl->assign('BLOCK_ID', $block_config['bid']);
             $xtpl->assign('TEMPLATE', $module_info['template']);
             $html = "";
-            
+
             foreach ($module_array_cat as $cat) {
-                
+
                 if ($cat['parentid'] == 0) {
-                    
+
                     $html .= "<li>\n";
                     $html .= "<a title=\"" . $cat['title'] . "\" href=\"" . $cat['link'] . "\">" . nv_clean60($cat['title'], $title_length) . "</a>\n";
                     if (!empty($cat['subcatid'])) $html .= nv_dispathch_sub_category($cat['subcatid'], $title_length);
                     $html .= "</li>\n";
                 }
             }
-            
+
             $xtpl->assign('HTML_CONTENT', $html);
             $xtpl->parse('main');
             return $xtpl->text('main');
@@ -105,7 +105,7 @@ if (!nv_function_exists('nv_dispathch_category')) {
 
     /**
      * nv_dispathch_sub_category()
-     * 
+     *
      * @param mixed $list_sub
      * @param mixed $title_length
      * @return
@@ -119,7 +119,7 @@ if (!nv_function_exists('nv_dispathch_category')) {
             $list = explode(",", $list_sub);
             $html = "<ul>\n";
             foreach ($list as $catid) {
-                
+
                 $html .= "<li>\n";
                 $html .= "<a title=\"" . $module_array_cat[$catid]['title'] . "\" href=\"" . $module_array_cat[$catid]['link'] . "\">" . nv_clean60($module_array_cat[$catid]['title'], $title_length) . "</a>\n";
                 if (!empty($module_array_cat[$catid]['subcatid'])) $html .= nv_dispathch_sub_category($module_array_cat[$catid]['subcatid'], $title_length);
@@ -149,9 +149,9 @@ if (defined('NV_SYSTEM')) {
                     $module_array_cat[$module_array_cat[$l['id']]['parentid']]['subcatid'] = $module_array_cat[$module_array_cat[$l['id']]['parentid']]['subcatid'] . "," . $module_array_cat[$l['id']]['id'];
                 }
             }
-        
+
         }
-        
+
         $content = nv_dispathch_category($block_config);
     }
 }
