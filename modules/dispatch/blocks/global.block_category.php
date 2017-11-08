@@ -23,15 +23,15 @@ if (!nv_function_exists('nv_dispathch_category')) {
     function nv_block_config_dispathch_category($module, $data_block, $lang_block)
     {
         global $db, $language_array;
-        $html = "<select name=\"config_title_length\">\n";
+        $html = "<select name=\"config_title_length\" class=\"form-control\">\n";
         $html .= "<option value=\"\">" . $lang_block['title_length'] . "</option>\n";
         for ($i = 0; $i < 100; $i++) {
             $sel = ($data_block['title_length'] == $i) ? ' selected' : '';
 
             $html .= "<option value=\"" . $i . "\" " . $sel . ">" . $i . "</option>\n";
         }
-        $html .= "</select></td>\n";
-        return '<tr><td>' . $lang_block['title_length'] . '</td><td>' . $html . '</td></tr>';
+        $html .= "</select>\n";
+        return '<div class="form-group"><label class="control-label col-sm-6">' . $lang_block['title_length'] . '</label> <div class="col-sm-18">' . $html . '</div></div>';
     }
 
     /**
