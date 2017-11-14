@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET 4.x
- * @Author VINADES.,JSC (contact@vinades.vn)
+ * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Thu, 14 Apr 2011 12:01:30 GMT
@@ -15,8 +15,7 @@ $page_title = $lang_module['signer'];
 $contents = "";
 
 if (empty($signerList) and !$nv_Request->isset_request('add', 'get')) {
-    Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=signer&add");
-    die();
+    nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=signer&add");
 }
 
 if ($nv_Request->isset_request('cWeight, id', 'post')) {
@@ -41,7 +40,7 @@ if ($nv_Request->isset_request('cWeight, id', 'post')) {
     $db->query($query);
     $nv_Cache->delMod($module_name);
     nv_insert_logs(NV_LANG_DATA, $module_name, $lang_module['logChangeWeight'], "Id: " . $id, $admin_info['userid']);
-    die('OK');
+    nv_htmlOutput('OK');
 }
 
 if ($nv_Request->isset_request('del', 'post')) {
@@ -58,7 +57,7 @@ if ($nv_Request->isset_request('del', 'post')) {
     fix_signerWeight();
     $nv_Cache->delMod($module_name);
     nv_insert_logs(NV_LANG_DATA, $module_name, $lang_module['logDelsigner'], "Id: " . $id, $admin_info['userid']);
-    die('OK');
+    nv_htmlOutput('OK');
 }
 
 $xtpl = new XTemplate($op . ".tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file);
@@ -74,8 +73,7 @@ if ($nv_Request->isset_request('add', 'get') or $nv_Request->isset_request('edit
     if ($nv_Request->isset_request('edit', 'get')) {
         $post['id'] = $nv_Request->get_int('id', 'get');
         if (empty($post['id']) or !isset($signerList[$post['id']])) {
-            Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=signer");
-            die();
+            nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=signer");
         }
         
         $xtpl->assign('PTITLE', $lang_module['editsigner']);
@@ -110,7 +108,7 @@ if ($nv_Request->isset_request('add', 'get') or $nv_Request->isset_request('edit
         
         $nv_Cache->delMod($module_name);
         nv_insert_logs(NV_LANG_DATA, $module_name, $log_title, "Id: " . $post['id'], $admin_info['userid']);
-        die('OK');
+        nv_htmlOutput('OK');
     }
     
     $post['name'] = ($nv_Request->isset_request('edit', 'get')) ? $signerList[$post['id']]['name'] : "";

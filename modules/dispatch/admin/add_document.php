@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET 4.x
- * @Author VINADES.,JSC (contact@vinades.vn)
+ * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
@@ -184,8 +184,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
                         }
                     }
                     
-                    Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main");
-                    exit();
+                    nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main");
                 
                 } else {
                     $error = $lang_module['error_update'];
@@ -229,8 +228,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
                         }
                     }
                     
-                    Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main");
-                    exit();
+                    nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main");
                 
                 } else {
                     $error = $lang_module['error_insert'];
@@ -385,7 +383,7 @@ if ($nv_Request->isset_request('action', 'post')) {
     $sql = "SELECT positions FROM " . NV_PREFIXLANG . "_" . $module_data . "_signer WHERE id=" . $signer;
     $result = $db->query($sql);
     $position = $result->fetchColumn();
-    die($lang_module['positions'] . ": " . $position);
+    nv_htmlOutput($lang_module['positions'] . ": " . $position);
 }
 
 $xtpl->parse('inter');

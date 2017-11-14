@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET 4.x
- * @Author VINADES.,JSC (contact@vinades.vn)
+ * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2014 VINADES.,JSC. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
@@ -120,8 +120,7 @@ if ($nv_Request->isset_request('add', 'get')) {
             } else {
                 nv_insert_logs(NV_LANG_DATA, $module_name, $lang_module['type_add'], $array['title'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
-                Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type");
-                exit();
+                nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type");
             }
         }
     } else {
@@ -171,8 +170,7 @@ if ($nv_Request->isset_request('edit', 'get')) {
     $typeid = $nv_Request->get_int('typeid', 'get', 0);
     
     if (empty($typeid)) {
-        Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type");
-        exit();
+        nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type");
     }
     
     $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_type` WHERE `id`=" . $typeid;
@@ -180,8 +178,7 @@ if ($nv_Request->isset_request('edit', 'get')) {
     $numtype = $result->rowCount();
     
     if ($numtype != 1) {
-        Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type");
-        exit();
+        nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type");
     }
     
     $row = $result->fetch();
@@ -254,8 +251,7 @@ if ($nv_Request->isset_request('edit', 'get')) {
                 
                 $nv_Cache->delMod($module_name);
                 nv_insert_logs(NV_LANG_DATA, $module_name, $lang_module['type_edit'], $array['title'], $admin_info['userid']);
-                Header("Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type");
-                exit();
+                nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type");
             }
         }
     } else {
@@ -320,7 +316,7 @@ if ($nv_Request->isset_request('del', 'post')) {
     nv_FixWeighttype($parentid);
     $nv_Cache->delMod($module_name);
     
-    die('OK');
+    nv_htmlOutput('OK');
 }
 //Chinh thu tu chu de
 if ($nv_Request->isset_request('changeweight', 'post')) {
@@ -351,7 +347,7 @@ if ($nv_Request->isset_request('changeweight', 'post')) {
     
     $nv_Cache->delMod($module_name);
     
-    die('OK');
+    nv_htmlOutput('OK');
 }
 
 //Kich hoat - dinh chi
@@ -375,7 +371,7 @@ if ($nv_Request->isset_request('changestatus', 'post')) {
     
     $nv_Cache->delMod($module_name);
     
-    die('OK');
+    nv_htmlOutput('OK');
 }
 
 //Danh sach chu de
