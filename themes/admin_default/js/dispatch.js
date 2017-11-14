@@ -166,7 +166,6 @@ function nv_chang_type_weight_result(res) {
 
 function nv_chang_type_status(typeid) {
 	var nv_timer = nv_settimeout_disable('change_status' + typeid, 2000);
-	nv_ajax("post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=type&changestatus=1&typeid=' + typeid + '&num=' + nv_randomPassword(8), '', 'nv_chang_type_status_res');
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=type&nocache=' + new Date().getTime(), 'changestatus=1&typeid=' + typeid + '&num=' + nv_randomPassword(8), function(res) {
 		nv_chang_type_status_res( res );
 	});
