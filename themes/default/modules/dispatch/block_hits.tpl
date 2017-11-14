@@ -1,15 +1,15 @@
 <!-- BEGIN: main -->
 <div class="box-border" id="topviews">
-	<div class="content-box">
-		<!-- BEGIN: topviews -->
-		<ul class="list-number">
-			<!-- BEGIN: loop -->
-			<li>
-				<a href="{topviews.link}" title="{topviews.title}">{topviews.title}</a>
-			</li>
-			<!-- END: loop -->
-		</ul>
-		<!-- END: topviews -->
-	</div>
+    <div class="content-box">
+        <!-- BEGIN: topviews -->
+        <ul class="list-number">
+            <!-- BEGIN: loop -->
+            <li>
+                <a href="{topviews.link}" title="{topviews.title}">{topviews.title}</a>
+            </li>
+            <!-- END: loop -->
+        </ul>
+        <!-- END: topviews -->
+    </div>
 </div>
 <!-- END: main -->

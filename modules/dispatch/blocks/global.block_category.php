@@ -8,7 +8,8 @@
  * @Createdate 3/9/2010 23:25
  */
 
-if (!defined('NV_MAINFILE')) die('Stop!!!');
+if (!defined('NV_MAINFILE'))
+    die('Stop!!!');
 
 if (!nv_function_exists('nv_dispathch_category')) {
 
@@ -23,7 +24,7 @@ if (!nv_function_exists('nv_dispathch_category')) {
     function nv_block_config_dispathch_category($module, $data_block, $lang_block)
     {
         global $db, $language_array;
-        $html = "<select name=\"config_title_length\">\n";
+        $html = "<select name=\"config_title_length\" class=\"form-control\">\n";
         $html .= "<option value=\"\">" . $lang_block['title_length'] . "</option>\n";
         for ($i = 0; $i < 100; $i++) {
             $sel = ($data_block['title_length'] == $i) ? ' selected' : '';
@@ -31,7 +32,7 @@ if (!nv_function_exists('nv_dispathch_category')) {
             $html .= "<option value=\"" . $i . "\" " . $sel . ">" . $i . "</option>\n";
         }
         $html .= "</select></td>\n";
-        return '<tr><td>' . $lang_block['title_length'] . '</td><td>' . $html . '</td></tr>';
+        return '<div class="form-group"><label class="control-label col-sm-6">' . $lang_block['title_length'] . ':</label><div class="col-sm-9">' . $html . '</div></div>';
     }
 
     /**
@@ -59,45 +60,54 @@ if (!nv_function_exists('nv_dispathch_category')) {
      */
     function nv_dispathch_category($block_config)
     {
-        global $module_array_cat, $module_info, $lang_module, $site_mods, $global_config;
+        global $module_array_cat, $module_info, $site_mods, $global_config;
 
         $module = $block_config['module'];
-        $module_file = $site_mods[$module]['module_file'];
+        $module_theme = $site_mods[$module]['module_theme'];
 
-        if (file_exists(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file . '/block_category.tpl')) {
+        if (file_exists(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_theme . '/block_category.tpl')) {
             $block_theme = $module_info['template'];
-        } elseif (file_exists(NV_ROOTDIR . '/themes/' . $global_config['site_theme'] . '/modules/' . $module_file . '/block_category.tpl')) {
+        } elseif (file_exists(NV_ROOTDIR . '/themes/' . $global_config['site_theme'] . '/modules/' . $module_theme . '/block_category.tpl')) {
             $block_theme = $global_config['site_theme'];
         } else {
             $block_theme = 'default';
         }
 
-        $xtpl = new XTemplate("block_category.tpl", NV_ROOTDIR . "/themes/" . $block_theme . "/modules/" . $module_info['module_theme']);
-        $xtpl->assign('LANG', $lang_module);
+        if (file_exists(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/css/jquery.metisMenu.css')) {
+            $block_css = $module_info['template'];
+        } elseif (file_exists(NV_ROOTDIR . '/themes/' . $global_config['site_theme'] . '/css/jquery.metisMenu.css')) {
+            $block_theme = $global_config['site_theme'];
+        } else {
+            $block_theme = 'default';
+        }
+
+        $xtpl = new XTemplate("block_category.tpl", NV_ROOTDIR . "/themes/" . $block_theme . "/modules/" . $module_theme);
         $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
         $xtpl->assign('TEMPLATE', $block_theme);
+        $xtpl->assign('TEMPLATE_CSS', $block_css);
+        $xtpl->assign('UNIQUE_KEY_ID', $site_mods[$module]['module_theme']);
+        $xtpl->assign('BLOCK_ID', $block_config['bid']);
 
-        $arr = array();
+        $title_length = $block_config['title_length'];
 
         if (!empty($module_array_cat)) {
-            $title_length = $block_config['title_length'];
-            $xtpl->assign('LANG', $lang_module);
-            $xtpl->assign('BLOCK_ID', $block_config['bid']);
-            $xtpl->assign('TEMPLATE', $module_info['template']);
-            $html = "";
-
             foreach ($module_array_cat as $cat) {
-
                 if ($cat['parentid'] == 0) {
+                    $cat['title0'] = $cat['title'];
+                    if (!empty($title_length)) {
+                        $cat['title0'] = nv_clean60($cat['title'], $title_length);
+                    }
+                    $xtpl->assign('CAT', $cat);
 
-                    $html .= "<li>\n";
-                    $html .= "<a title=\"" . $cat['title'] . "\" href=\"" . $cat['link'] . "\">" . nv_clean60($cat['title'], $title_length) . "</a>\n";
-                    if (!empty($cat['subcatid'])) $html .= nv_dispathch_sub_category($cat['subcatid'], $title_length);
-                    $html .= "</li>\n";
+                    if (!empty($cat['subcatid'])) {
+                        $xtpl->assign('SUBCAT', nv_dispathch_sub_category($cat['subcatid'], $title_length));
+                        $xtpl->parse('main.cat.subcat');
+                    }
+
+                    $xtpl->parse('main.cat');
                 }
             }
 
-            $xtpl->assign('HTML_CONTENT', $html);
             $xtpl->parse('main');
             return $xtpl->text('main');
         }
@@ -121,8 +131,9 @@ if (!nv_function_exists('nv_dispathch_category')) {
             foreach ($list as $catid) {
 
                 $html .= "<li>\n";
-                $html .= "<a title=\"" . $module_array_cat[$catid]['title'] . "\" href=\"" . $module_array_cat[$catid]['link'] . "\">" . nv_clean60($module_array_cat[$catid]['title'], $title_length) . "</a>\n";
-                if (!empty($module_array_cat[$catid]['subcatid'])) $html .= nv_dispathch_sub_category($module_array_cat[$catid]['subcatid'], $title_length);
+                $html .= "<a title=\"" . $module_array_cat[$catid]['title'] . "\" href=\"" . $module_array_cat[$catid]['link'] . "\">" . (!empty($title_length) ? nv_clean60($module_array_cat[$catid]['title'], $title_length) : $module_array_cat[$catid]['title']) . "</a>\n";
+                if (!empty($module_array_cat[$catid]['subcatid']))
+                    $html .= nv_dispathch_sub_category($module_array_cat[$catid]['subcatid'], $title_length);
                 $html .= "</li>\n";
             }
             $html .= "</ul>\n";
