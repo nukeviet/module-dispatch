@@ -149,30 +149,30 @@
 				<td>{LANG.who_view}</td>
 				<td>
 					<!-- BEGIN: groups_view -->
-						<div class="row">
-							<label><input name="groups_view[]" type="checkbox" value="{groups_view.value}" {groups_view.checked} />{groups_view.title}</label>
-						</div>
-					<!-- END: groups_view -->
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2"><input class="btn btn-primary" type="submit" name="submit" value="{LANG.save}" /></td>
-			</tr>
-		</tbody>
-	</table>
+					    <div class="row">
+                            <label><input name="groups_view[]" type="checkbox" value="{groups_view.value}" {groups_view.checked} />{groups_view.title}</label>
+                        </div>
+                    <!-- END: groups_view -->
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input class="btn btn-primary" type="submit" name="submit" value="{LANG.save}" /></td>
+            </tr>
+        </tbody>
+    </table>
 </form>
 
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
 <script type="text/javascript">
-	$("#from_time,#date_iss, #date_first, #date_die").datepicker({
-		showOn : "both",
-		dateFormat : "dd.mm.yy",
-		changeMonth : true,
-		changeYear : true,
-		showOtherMonths : true,
-		buttonImage : nv_base_siteurl + "assets/images/calendar.gif",
-		buttonImageOnly : true
-	});
+    $("#from_time,#date_iss, #date_first, #date_die").datepicker({
+        showOn : "both",
+        dateFormat : "dd.mm.yy",
+        changeMonth : true,
+        changeYear : true,
+        showOtherMonths : true,
+        buttonImage : nv_base_siteurl + "assets/images/calendar.gif",
+        buttonImageOnly : true
+    });
 </script>
 <!-- END: inter -->
