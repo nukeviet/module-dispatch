@@ -80,6 +80,7 @@ if (!nv_function_exists('nv_type_blocks')) {
         $module = $block_config['module'];
 
         $xtpl = new XTemplate("block_hits.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $site_mods[$module]['module_theme']);
+
         $xtpl->assign('BASESITE', NV_BASE_SITEURL);
         $xtpl->assign('LANG', $lang_module);
         $xtpl->assign('module', $module);

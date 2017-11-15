@@ -31,8 +31,8 @@ if (!nv_function_exists('nv_dispathch_category')) {
 
             $html .= "<option value=\"" . $i . "\" " . $sel . ">" . $i . "</option>\n";
         }
-        $html .= "</select></td>\n";
-        return '<div class="form-group"><label class="control-label col-sm-6">' . $lang_block['title_length'] . ':</label><div class="col-sm-9">' . $html . '</div></div>';
+        $html .= "</select>\n";
+        return '<div class="form-group"><label class="control-label col-sm-6">' . $lang_block['title_length'] . '</label> <div class="col-sm-18">' . $html . '</div></div>';
     }
 
     /**
