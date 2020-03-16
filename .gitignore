@@ -41,3 +41,5 @@
 /vendor
 /.gitattributes
 /composer.json
+/.settings
+/.github
