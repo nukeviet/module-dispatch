@@ -115,7 +115,7 @@ if ($nv_Request->isset_request("content", "get")) {
     $sql .= " AND content LIKE '%" . $db->dblikeescape($content) . "%' ";
     $base_url .= "&amp;content=" . urlencode($content);
 }
-
+$page_url = $base_url;
 $sql1 = "SELECT COUNT(*) " . $sql;
 
 $result1 = $db->query($sql1);
@@ -127,19 +127,16 @@ if (!$all_page) {
 
 $sql .= " ORDER BY from_time DESC";
 
-$page = $nv_Request->get_int('page', 'get', 0);
+$page = $nv_Request->get_int('page', 'get', 1);
 
 // URL chính tắc: $page_url, $base_url và $canonicalUrl
-if (isset($array_op[0]) and substr($array_op[0], 0, 5) == 'page-') {
-    $page = intval(substr($array_op[0], 5));
-}
 if ($page > 1) {
-    $page_url .= '&amp;' . NV_OP_VARIABLE . '=page-' . $page;
+    $page_url .= '&amp;page=' . $page;
 }
 $canonicalUrl = getCanonicalUrl($page_url, true, true);
 
-$per_page = 30;
-$sql2 = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
+$per_page = 1;
+$sql2 = "SELECT * " . $sql . " LIMIT " . $per_page . " OFFSET " . (($page - 1) * $per_page);
 
 $query2 = $db->query($sql2);
 
@@ -188,7 +185,7 @@ if (empty($array)) {
 }
 
 // 2.Đánh số trang
-$urlappend = '&amp;' . NV_OP_VARIABLE . '=page-';
+$urlappend = '&amp;page=';
 betweenURLs($page, ceil($all_page/$per_page), $base_url, $urlappend, $prevPage, $nextPage);
 
 $contents = nv_theme_congvan_main($error, $array, $page_title, $base_url, $all_page, $per_page, $page, $type, $se, $to, $from, $from_signer, $content, $code);
