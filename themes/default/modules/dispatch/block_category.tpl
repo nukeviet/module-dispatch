@@ -1,6 +1,6 @@
 <!-- BEGIN: main -->
-<link rel="stylesheet" type="text/css"	href="{NV_BASE_SITEURL}themes/{TEMPLATE_CSS}/css/jquery.metisMenu.css" />
-<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery/jquery.metisMenu.js"></script>
+<link rel="stylesheet" type="text/css"	href="{NV_STATIC_URL}themes/{TEMPLATE_CSS}/css/jquery.metisMenu.css" />
+<script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery/jquery.metisMenu.js"></script>
 
 <div class="clearfix panel metismenu">
 	<aside class="sidebar">

@@ -19,7 +19,7 @@ $code = $content = '';
 $array = array();
 $error = '';
 $sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id!=0";
-$base_url = NV_BASE_SITEURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name;
+$page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
 
 $listcats = nv_listcats(0);
 $listdes = nv_listdes(0);
@@ -128,6 +128,16 @@ if (!$all_page) {
 $sql .= " ORDER BY from_time DESC";
 
 $page = $nv_Request->get_int('page', 'get', 0);
+
+// URL chính tắc: $page_url, $base_url và $canonicalUrl
+if (isset($array_op[0]) and substr($array_op[0], 0, 5) == 'page-') {
+    $page = intval(substr($array_op[0], 5));
+}
+if ($page > 1) {
+    $page_url .= '&amp;' . NV_OP_VARIABLE . '=page-' . $page;
+}
+$canonicalUrl = getCanonicalUrl($page_url, true, true);
+
 $per_page = 30;
 $sql2 = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
 
@@ -176,6 +186,10 @@ while ($row = $query2->fetch()) {
 if (empty($array)) {
     $error = $lang_module['error_rows'];
 }
+
+// 2.Đánh số trang
+$urlappend = '&amp;' . NV_OP_VARIABLE . '=page-';
+betweenURLs($page, ceil($all_page/$per_page), $base_url, $urlappend, $prevPage, $nextPage);
 
 $contents = nv_theme_congvan_main($error, $array, $page_title, $base_url, $all_page, $per_page, $page, $type, $se, $to, $from, $from_signer, $content, $code);
 
