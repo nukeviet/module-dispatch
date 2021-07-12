@@ -4,7 +4,7 @@
 		<tbody>
 			<tr>
 				<td width="200px"><strong>{LANG.dis}</strong></td>
-				<td><strong><a href="{TYPELINK}">{TYPENAME}</a> </strong></td>
+				<td><strong><a href="{TYPELINK}" rel="dofollow">{TYPENAME}</a> </strong></td>
 			</tr>
 
 			<tr>
@@ -52,7 +52,7 @@
 			<!-- BEGIN: taifile -->
 			<tr>
 				<td><strong> {LANG.file}</strong></td>
-				<td><!-- BEGIN: row --><a href="{NV_BASE_SITEURL}uploads/{module}/{FILEUPLOAD}"><em class="fa fa-download">&nbsp;</em>{FILEUPLOAD} </a>
+				<td><!-- BEGIN: row --><a href="{NV_BASE_SITEURL}uploads/{module}/{FILEUPLOAD}" rel="dofollow"><em class="fa fa-download">&nbsp;</em>{FILEUPLOAD} </a>
 				<br />
 				<!-- END: row --></td>
 			</tr>
