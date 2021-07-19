@@ -22,6 +22,8 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
 
     $listcats = nv_listcats(0);
     $listdes = nv_listdes(0);
+    $page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '/' . $alias . '-' . $id;
+    $canonicalUrl = getCanonicalUrl($page_url);
 
     $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id . " AND alias=" . $db->quote($alias);
 
@@ -48,7 +50,9 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
         $row['date_die'] = '';
     }
 
-    $row['type_title'] = $arr_type[$row['type']]['title'];
+    if (isset($arr_type[$row['type']]['title'])) {
+        $row['type_title'] = $arr_type[$row['type']]['title'];
+    }
 
     if ($row['from_depid'] != 0) {
         $row['from_depid'] = $listdes[$row['from_depid']]['title'];

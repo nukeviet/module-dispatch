@@ -1,5 +1,5 @@
 <!-- BEGIN: main -->
-<link rel="stylesheet" type="text/css" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.css">
 
 <!-- BEGIN: btn_timkiem -->
 <a class="btn btn-primary" href="{SE_LINK}">{LANG.sereach}</a>
@@ -89,7 +89,7 @@
 				<td> {ROW.to_org} </td>
 				<td>
 					<!-- BEGIN: loop1 -->
-					<a href="{NV_BASE_SITEURL}uploads/{module}/{FILEUPLOAD}" title="Download"><em class="fa fa-download">&nbsp;</em></a>
+					<a href="{NV_BASE_SITEURL}uploads/{module}/{FILEUPLOAD}" title="Download" rel="dofollow"><em class="fa fa-download">&nbsp;</em></a>
 					<!-- END: loop1 -->
 				</td>
 			</tr>
@@ -104,8 +104,8 @@
 	<!-- END: data -->
 </form>
 
-<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
+<script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
 <script type="text/javascript">
 	$("#from, #to").datepicker({
 		showOn : "both",
