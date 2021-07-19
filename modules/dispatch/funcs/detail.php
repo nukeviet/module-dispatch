@@ -22,7 +22,7 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
 
     $listcats = nv_listcats(0);
     $listdes = nv_listdes(0);
-    $page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '/' . $alias;
+    $page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '/' . $alias . '-' . $id;
     $canonicalUrl = getCanonicalUrl($page_url);
 
     $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id . " AND alias=" . $db->quote($alias);
