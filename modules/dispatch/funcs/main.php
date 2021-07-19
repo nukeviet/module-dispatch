@@ -133,7 +133,7 @@ $page = $nv_Request->get_int('page', 'get', 1);
 if ($page > 1) {
     $page_url .= '&amp;page=' . $page;
 }
-$canonicalUrl = getCanonicalUrl($page_url, true, true);
+$canonicalUrl = getCanonicalUrl($page_url);
 
 $per_page = 1;
 $sql2 = "SELECT * " . $sql . " LIMIT " . $per_page . " OFFSET " . (($page - 1) * $per_page);

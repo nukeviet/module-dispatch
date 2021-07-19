@@ -17,7 +17,7 @@ $fileupload = array();
 $array_data = array();
 
 $page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
-$canonicalUrl = getCanonicalUrl($page_url, true, true);
+$canonicalUrl = getCanonicalUrl($page_url);
 
 if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array_op[1], $matches)) {
     $id = $matches[2];

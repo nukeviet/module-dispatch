@@ -17,7 +17,7 @@ if (!$nv_Request->isset_request('session_files', 'session')) {
 $session_files = $nv_Request->get_string('session_files', 'session', '');
 
 $page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
-$canonicalUrl = getCanonicalUrl($page_url, true, true);
+$canonicalUrl = getCanonicalUrl($page_url);
 
 if (empty($session_files)) {
     die('Wrong URL');
