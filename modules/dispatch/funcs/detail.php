@@ -50,7 +50,9 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
         $row['date_die'] = '';
     }
 
-    $row['type_title'] = $arr_type[$row['type']]['title'];
+    if (isset($arr_type[$row['type']]['title'])) {
+        $row['type_title'] = $arr_type[$row['type']]['title'];
+    }
 
     if ($row['from_depid'] != 0) {
         $row['from_depid'] = $listdes[$row['from_depid']]['title'];
