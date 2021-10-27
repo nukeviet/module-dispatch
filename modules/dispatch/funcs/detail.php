@@ -7,8 +7,8 @@
  * @License GNU/GPL version 2 or any later version
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
-
-if (!defined('NV_IS_MOD_CONGVAN')) die('Stop!!!');
+if (! defined('NV_IS_MOD_CONGVAN'))
+    die('Stop!!!');
 
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
@@ -18,15 +18,15 @@ $array_data = array();
 
 if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array_op[1], $matches)) {
     $id = $matches[2];
-    $alias = $matches[0];
+    $alias = $matches[1];
 
     $listcats = nv_listcats(0);
     $listdes = nv_listdes(0);
     $page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '/' . $alias . '-' . $id;
     $canonicalUrl = getCanonicalUrl($page_url);
 
-    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id . " AND alias=" . $db->quote($alias);
-
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_document WHERE id=" . $id . " AND alias=" . $db->quote($alias . '-' . $id);
+    //
     $result = $db->query($sql);
     $num = $result->rowCount();
     if ($num != 1) {
@@ -100,7 +100,7 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
         }
     }
 
-    if (!empty($row['file'])) {
+    if (! empty($row['file'])) {
         $fileupload = explode(",", $row['file']);
         foreach ($fileupload as $f) {
             $xtpl->assign('FILEUPLOAD', $f);
@@ -121,7 +121,6 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
             $row['name'] = $listdes[$row['deid']]['title'];
             $xtpl->assign('DATA', $row);
             $xtpl->parse('main.de.loop');
-
         }
         $xtpl->parse('main.de');
     }
@@ -132,7 +131,6 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
     include NV_ROOTDIR . '/includes/header.php';
     echo nv_site_theme($contents);
     include NV_ROOTDIR . '/includes/footer.php';
-
 } else {
     nv_redirect_location(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, 1);
 }
