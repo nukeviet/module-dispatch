@@ -104,6 +104,8 @@ while (list($_tmp) = $result->fetch(PDO::FETCH_NUM)) {
  */
 function nv_up_update()
 {
+    global $nv_update_baseurl, $db, $db_config, $nv_Cache, $nv_update_config;
+
     $return = array(
         'status' => 1,
         'complete' => 1,
@@ -112,5 +114,30 @@ function nv_up_update()
         'lang' => 'NO',
         'message' => ''
     );
+
+    try {
+        $num = $db->query("SELECT COUNT(*) FROM " . $db_config['prefix'] . "_setup_extensions WHERE basename='" . $nv_update_config['formodule'] . "' AND type='module'")->fetchColumn();
+        $version = $nv_update_config['to_version'] . " " . $nv_update_config['release_date'];
+
+        if (!$num) {
+            $db->query("INSERT INTO " . $db_config['prefix'] . "_setup_extensions (
+                id, type, title, is_sys, is_virtual, basename, table_prefix, version, addtime, author, note
+            ) VALUES (
+                8679, 'module', 'dispatch', 0, 1, 'dispatch', 'dispatch', '" . $nv_update_config['to_version'] . " " . $nv_update_config['release_date'] . "', " . NV_CURRENTTIME . ", 'VINADES.,JSC (contact@vinades.vn)',
+                ''
+            )");
+        } else {
+            $db->query("UPDATE " . $db_config['prefix'] . "_setup_extensions SET
+                id=8679,
+                version='" . $version . "',
+                author='VINADES.,JSC (contact@vinades.vn)'
+            WHERE basename='" . $nv_update_config['formodule'] . "' AND type='module'");
+        }
+    } catch (PDOException $e) {
+        trigger_error($e->getMessage());
+    }
+
+    $nv_Cache->delAll(true);
+
     return $return;
 }
