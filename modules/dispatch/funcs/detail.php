@@ -35,7 +35,7 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
 
     $row = $result->fetch();
 
-    $row['cat'] = $listcats[$row['catid']]['title'];
+    $row['cat'] = isset($listcats[$row['catid']]['title']) ? $listcats[$row['catid']]['title'] : '';
     $row['status'] = $arr_status[$row['status']]['name'];
     if ($row['from_time'] != 0) {
         $row['from_time'] = nv_date('d.m.Y', $row['from_time']);
@@ -84,7 +84,7 @@ if (isset($array_op[1]) and preg_match("/^([a-zA-Z0-9\-\_]+)\-([\d]+)$/", $array
     $xtpl->assign('MODULE_LINK', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name);
 
     $xtpl->assign('TYPELINK', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=main&type=" . $row['type']);
-    $xtpl->assign('TYPENAME', $listtypes[$row['type']]['title']);
+    $xtpl->assign('TYPENAME', isset($listtypes[$row['type']]['title']) ? $listtypes[$row['type']]['title'] : '' );
     $xtpl->parse('main.if_cat');
 
     $xtpl->assign('ROW', $row);

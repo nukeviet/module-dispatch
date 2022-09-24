@@ -21,3 +21,20 @@ a.button1 {
     text-align: center;
     text-decoration: none;
 }
+
+td img.ui-datepicker-trigger{
+    position: relative;
+    top: 6px;
+    left: 6px;
+}
+
+#fileupload_items{
+    display: flex;
+    flex-direction: column;
+}
+#fileupload_items input#fileupload{
+    margin-right: 9px !important;
+}
+#fileupload_items input#button{
+    margin-right: 0 !important;
+}

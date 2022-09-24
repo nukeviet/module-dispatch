@@ -156,7 +156,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><input class="btn btn-primary" type="submit" name="submit" value="{LANG.save}" /></td>
+                <td colspan="2"><input class="btn btn-primary" type="submit" name="btnsubmit" value="{LANG.save}" /></td>
             </tr>
         </tbody>
     </table>

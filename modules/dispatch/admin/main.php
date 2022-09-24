@@ -57,7 +57,7 @@ if (empty($listdes)) {
 $listtypes = nv_listtypes($type, 0);
 
 if (empty($listtypes)) {
-    nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=tyes&add=1");
+    nv_redirect_location(NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=type&add=1");
 
 }
 
@@ -184,8 +184,8 @@ while ($row = $query2->fetch()) {
         'stt' => $i, //
         'title' => $row['title'], //
         'code' => $row['code'], //
-        'cat' => $listcats[$row['catid']]['title'], //
-        'type' => $listtypes[$row['type']]['title'], //
+        'cat' => isset($listcats[$row['catid']]['title']) ? $listcats[$row['catid']]['title'] : '', //
+        'type' => isset($listtypes[$row['type']]['title']) ? $listtypes[$row['type']]['title'] : '', //
         'from_signer' => $listsinger[$row['from_signer']]['name'], //
         'link_singer' => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;signer=" . $row['from_signer'], //
         'content' => $content, //
