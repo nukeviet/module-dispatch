@@ -36,7 +36,7 @@ $nv_update_config['lang'] = array();
 $nv_update_config['lang']['vi'] = array();
 
 // Tiếng Việt
-$nv_update_config['lang']['vi']['nv_up_finish'] = 'Cập nhật Module hoàn tất';
+$nv_update_config['lang']['vi']['nv_up_finish'] = 'Đánh dấu phiên bản mới';
 
 $nv_update_config['tasklist'] = array();
 $nv_update_config['tasklist'][] = array(
