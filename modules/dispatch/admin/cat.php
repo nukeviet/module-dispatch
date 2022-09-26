@@ -61,7 +61,7 @@ $error = "";
 if ($nv_Request->isset_request('add', 'get')) {
     $page_title = $lang_module['cat_add'];
     $is_error = false;
-    if ($nv_Request->isset_request('submit', 'post')) {
+    if ($nv_Request->isset_request('btnsubmit', 'post')) {
         $array['parentid'] = $nv_Request->get_int('parentid', 'post', 0);
         $array['title'] = $nv_Request->get_title('title', 'post', '', 1);
         $array['introduction'] = $nv_Request->get_title('introduction', 'post', '');
@@ -186,7 +186,7 @@ if ($nv_Request->isset_request('edit', 'get')) {
     
     $is_error = false;
     
-    if ($nv_Request->isset_request('submit', 'post')) {
+    if ($nv_Request->isset_request('btnsubmit', 'post')) {
         $array['parentid'] = $nv_Request->get_int('parentid', 'post', 0);
         $array['title'] = $nv_Request->get_title('title', 'post', '', 1);
         $array['introduction'] = $nv_Request->get_title('introduction', 'post', '');

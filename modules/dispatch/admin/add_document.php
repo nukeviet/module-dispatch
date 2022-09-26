@@ -40,7 +40,7 @@ if ($num > 0) {
     }
 }
 
-if ($nv_Request->isset_request('submit', 'post')) {
+if ($nv_Request->isset_request('btnsubmit', 'post')) {
     $id = $nv_Request->get_int('id', 'post', 0);
 
     $gr = array();

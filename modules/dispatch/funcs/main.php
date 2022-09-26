@@ -33,7 +33,7 @@ if ($nv_Request->isset_request("se", "get")) {
 if ($nv_Request->isset_request("type", "get")) {
     $type = $nv_Request->get_int('type', 'get', 0);
     if ($type != 0) {
-        $page_title = sprintf($lang_module['cv_list_by_type'], $listtypes[$type]['title']);
+        $page_title = $lang_module['cv_list_by_type'] . $listtypes[$type]['title'];
         $a_t = array();
         $query = "SELECT id FROM " . NV_PREFIXLANG . "_" . $module_data . "_type WHERE id=" . $type . " OR parentid= " . $type;
         $re = $db->query($query);

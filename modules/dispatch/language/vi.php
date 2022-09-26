@@ -64,7 +64,7 @@ $lang_module['dis_pe_re'] = 'Người nhận';
 $lang_module['dis_pe_si'] = 'Người ký nhận';
 $lang_module['product_list_by_cat'] = 'Các công văn thuộc chủ đề &ldquo;<strong>%s</strong>&rdquo;';
 $lang_module['product_list_by_cat_type'] = 'Các &ldquo;<strong>%s</strong>&rdquo; thuộc chủ đề &ldquo;<strong>%s</strong>&rdquo;';
-$lang_module['cv_list_by_type'] = 'Các công văn thuộc loại &ldquo;<strong>%s</strong>&rdquo;';
+$lang_module['cv_list_by_type'] = 'Các công văn thuộc loại ';
 $lang_module['cat_parent'] = 'Thuộc chủ đề ';
 
 $lang_module['dis_com'] = 'Công văn đến';
