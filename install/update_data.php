@@ -24,10 +24,10 @@ $nv_update_config['formodule'] = 'dispatch';
 
 // Thong tin phien ban, tac gia, ho tro
 $nv_update_config['release_date'] = 1664008363;
-$nv_update_config['author'] = 'VINADES.,JSC (contact@vinades.vn)';
+$nv_update_config['author'] = 'VINADES.,JSC <contact@vinades.vn>';
 $nv_update_config['support_website'] = 'https://github.com/nukeviet/module-dispatch/tree/to-4.5.02';
 $nv_update_config['to_version'] = '4.5.02';
-$nv_update_config['allow_old_version'] = array('4.5.00');
+$nv_update_config['allow_old_version'] = array('4.3.01', '4.5.00');
 
 // 0:Nang cap bang tay, 1:Nang cap tu dong, 2:Nang cap nua tu dong
 $nv_update_config['update_auto_type'] = 1;
@@ -36,14 +36,14 @@ $nv_update_config['lang'] = array();
 $nv_update_config['lang']['vi'] = array();
 
 // Tiếng Việt
-$nv_update_config['lang']['vi']['nv_up_update'] = 'Cập nhật Module';
+$nv_update_config['lang']['vi']['nv_up_finish'] = 'Đánh dấu phiên bản mới';
 
 $nv_update_config['tasklist'] = array();
 $nv_update_config['tasklist'][] = array(
     'r' => '4.5.02',
     'rq' => 1,
-    'l' => 'nv_up_update',
-    'f' => 'nv_up_update'
+    'l' => 'nv_up_finish',
+    'f' => 'nv_up_finish'
 );
 
 // Danh sach cac function
@@ -97,12 +97,12 @@ while (list($_tmp) = $result->fetch(PDO::FETCH_NUM)) {
 
 
 /**
- * nv_up_update()
+ * nv_up_finish()
  *
  * @return
  *
  */
-function nv_up_update()
+function nv_up_finish()
 {
     global $nv_update_baseurl, $db, $db_config, $nv_Cache, $nv_update_config;
 
@@ -123,7 +123,7 @@ function nv_up_update()
             $db->query("INSERT INTO " . $db_config['prefix'] . "_setup_extensions (
                 id, type, title, is_sys, is_virtual, basename, table_prefix, version, addtime, author, note
             ) VALUES (
-                373, 'module', 'dispatch', 0, 1, 'dispatch', 'dispatch', '" . $nv_update_config['to_version'] . " " . $nv_update_config['release_date'] . "', " . NV_CURRENTTIME . ", 'VINADES.,JSC (contact@vinades.vn)',
+                373, 'module', '" . $nv_update_config['formodule'] . "', 0, 1, '" . $nv_update_config['formodule'] . "', '" . $nv_update_config['formodule'] . "', '" . $nv_update_config['to_version'] . " " . $nv_update_config['release_date'] . "', " . NV_CURRENTTIME . ", 'VINADES.,JSC (contact@vinades.vn)',
                 ''
             )");
         } else {
