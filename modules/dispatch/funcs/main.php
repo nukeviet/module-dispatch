@@ -13,7 +13,7 @@ if (!defined('NV_IS_MOD_CONGVAN')) die('Stop!!!');
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 $se = $from = $to = $from_signer = 0;
-$type = '';
+$type = 0;
 $code = $content = '';
 
 $array = array();
