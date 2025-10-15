@@ -135,7 +135,7 @@ if ($page > 1) {
 }
 $canonicalUrl = getCanonicalUrl($page_url);
 
-$per_page = 1;
+$per_page = 20;
 $sql2 = "SELECT * " . $sql . " LIMIT " . $per_page . " OFFSET " . (($page - 1) * $per_page);
 
 $query2 = $db->query($sql2);

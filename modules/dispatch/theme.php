@@ -61,7 +61,7 @@ function nv_theme_congvan_main($error, $array, $page_title, $base_url, $all_page
         }
     }
 
-    if ($type != 0) {
+    if (!empty($type)) {
         $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_type` WHERE `parentid`=" . $type;
         $result = $db->query($sql);
         if ($result->rowCount() > 0) {
