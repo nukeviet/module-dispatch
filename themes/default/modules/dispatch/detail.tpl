@@ -52,7 +52,7 @@
 			<!-- BEGIN: taifile -->
 			<tr>
 				<td><strong> {LANG.file}</strong></td>
-				<td><!-- BEGIN: row --><a href="{NV_BASE_SITEURL}uploads/{module}/{FILEUPLOAD}" rel="dofollow"><em class="fa fa-download">&nbsp;</em>{FILEUPLOAD} </a>
+				<td><!-- BEGIN: row --><a href="{NV_BASE_SITEURL}{NV_UPLOADS_DIR}/{module}/{FILEUPLOAD}" rel="dofollow"><em class="fa fa-download">&nbsp;</em>{FILEUPLOAD} </a>
 				<br />
 				<!-- END: row --></td>
 			</tr>
