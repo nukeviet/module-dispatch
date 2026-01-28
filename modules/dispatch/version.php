@@ -8,10 +8,11 @@
  * @Createdate Tue, 19 Jul 2011 09:07:26 GMT
  */
 
-if (!defined('NV_MAINFILE'))
+if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
+}
 
-$module_version = array(
+$module_version = [
     'name' => 'Quan Ly Cong Van',
     'modfuncs' => 'main,detail',
     'submenu' => 'main,detail',
@@ -20,6 +21,6 @@ $module_version = array(
     'version' => '4.5.02',
     'date' => 'Saturday, September 24, 2022 15:00:00 GMT+07:00',
     'author' => 'VINADES <contact@vinades.vn>',
-    'uploads_dir' => array($module_name),
+    'uploads_dir' => [$module_name],
     'note' => ''
-);
+];
