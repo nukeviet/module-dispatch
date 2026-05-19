@@ -51,13 +51,13 @@ if ($nv_Request->isset_request('btnsubmit', 'post')) {
     $array['parentid'] = $nv_Request->get_int('parentid', 'post', 0);
     $array['type'] = $nv_Request->get_int('typeid', 'post', 0);
     $array['from_depid'] = $nv_Request->get_int('from_depid', 'post', 0);
-    $array['title'] = $nv_Request->get_string('title', 'post', '', '');
+    $array['title'] = $nv_Request->get_title('title', 'post', '', '');
     $array['alias'] = change_alias($array['title']);
-    $array['code'] = $nv_Request->get_string('code', 'post', '');
-    $array['to_org'] = $nv_Request->get_string('to_org', 'post', '');
-    $array['from_org'] = $nv_Request->get_string('from_org', 'post', '');
+    $array['code'] = $nv_Request->get_title('code', 'post', '');
+    $array['to_org'] = $nv_Request->get_title('to_org', 'post', '');
+    $array['from_org'] = $nv_Request->get_title('from_org', 'post', '');
     $array['from_signer'] = $nv_Request->get_int('from_signer', 'post', 0);
-    $array['content'] = $nv_Request->get_string('content', 'post', '');
+    $array['content'] = $nv_Request->get_title('content', 'post', '');
     $array['statusid'] = $nv_Request->get_int('statusid', 'post', 0);
     $arr_img = $nv_Request->get_typed_array('fileupload', 'post', 'string');
     $array['from_time'] = $nv_Request->get_title('from_time', 'post', '', '');
@@ -153,7 +153,7 @@ if ($nv_Request->isset_request('btnsubmit', 'post')) {
                     type = " . $array['type'] . ",
                     title = " . $db->quote($array['title']) . ",
                     alias = '',
-					code = '" . $array['code'] . "',
+					code = " . $db->quote($array['code']) . ",
 					content= " . $db->quote($array['content']) . ",
 					file = " . $db->quote($array['file']) . ",
 					from_org = " . $db->quote($array['from_org']) . ",
@@ -164,7 +164,7 @@ if ($nv_Request->isset_request('btnsubmit', 'post')) {
 					date_iss = " . $array['date_iss'] . ",
 					date_first = " . $array['date_first'] . ",
 					date_die = " . $array['date_die'] . ",
-					groups_view = " . $array['groups_view'] . ",
+					groups_view = " . $db->quote($array['groups_view']) . ",
 					status = " . $array['statusid'] . " WHERE id = " . $id;
 
                 if ($db->query($sql)) {
