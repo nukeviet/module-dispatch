@@ -46,7 +46,9 @@ function nv_del_type($typeid)
 
     $sql = "SELECT id FROM " . NV_PREFIXLANG . "_" . $module_data . "_type WHERE parentid=" . $typeid;
     $result = $db->query($sql);
-    while (list ($id) = $result->fetch(3)) {
+    while ($_scratch = $result->fetch(3)) {
+        list($id) = $_scratch;
+        unset($_scratch);
         nv_del_type($id);
     }
 
@@ -308,7 +310,7 @@ if ($nv_Request->isset_request('del', 'post')) {
 
     $sql = "SELECT COUNT(*) AS count, parentid FROM " . NV_PREFIXLANG . "_" . $module_data . "_type WHERE id=" . $typeid;
     $result = $db->query($sql);
-    list ($count, $parentid) = $result->fetch(3);
+    list ($count, $parentid) = $result->fetch(3) ?: [null, null];
 
     if ($count != 1) {
         die('NO');
@@ -400,7 +402,7 @@ if (!$num) {
 if ($pid) {
     $sql2 = "SELECT title,parentid FROM " . NV_PREFIXLANG . "_" . $module_data . "_type WHERE id=" . $pid;
     $result2 = $db->query($sql2);
-    list ($parentid, $parentid2) = $result2->fetch(3);
+    list ($parentid, $parentid2) = $result2->fetch(3) ?: [null, null];
     $caption = sprintf($lang_module['table_type2'], $parentid);
     $parentid = "<a href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=type&amp;pid=" . $parentid2 . "\">" . $parentid . "</a>";
 } else {
